@@ -1,0 +1,49 @@
+/* 장보기 탭 */
+
+.shop-top { display: flex; justify-content: space-between; align-items: center; padding: 18px 20px 0; }
+.shop-top .wk { font-size: 13px; color: var(--mute); }
+
+/* 이번 주 / 다음 주 */
+.seg { display: inline-flex; padding: 3px; border-radius: 20px; background: #ebe8e0; }
+.seg button { height: 32px; padding: 0 14px; border-radius: 16px; font-size: 13px; font-weight: 600; color: var(--mute); }
+.seg button.on { background: var(--paper); color: var(--ink); box-shadow: 0 1px 2px rgba(0, 0, 0, .08); }
+
+/* 주인공: 남은 개수 */
+.shop-head { padding: 30px 20px 6px; }
+.shop-head h1, .shop-empty h1 { font-size: 40px; line-height: 1.12; font-weight: 800; letter-spacing: -0.045em; }
+.shop-head p { margin-top: 8px; font-size: 13px; color: var(--mute); }
+.shop-head .bar { height: 6px; margin-top: 16px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.shop-head .bar span { display: block; height: 100%; background: var(--point); border-radius: 3px; transition: width .25s; }
+
+.shop-empty { padding: 40px 20px; }
+.shop-empty p { margin: 10px 0 24px; font-size: 15px; color: var(--mute); }
+.shop-empty .btn { flex: none; }
+
+/* 코너 */
+.corner { padding: 0 20px; }
+.corner h2 { padding: 28px 0 4px; font-size: 13px; font-weight: 700; color: var(--mute); }
+
+.item { width: 100%; display: flex; align-items: center; gap: 14px; padding: 13px 0; border-bottom: 1px solid var(--line); text-align: left; }
+.item-main { flex: 1; display: flex; align-items: center; gap: 14px; text-align: left; }
+.item .box { flex: none; width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--ink); display: grid; place-items: center; }
+.item.done .box { background: var(--ink); color: var(--paper); }
+.item .body { flex: 1; min-width: 0; }
+.item .nm { display: block; font-size: 16px; font-weight: 600; }
+.item .nm small { margin-left: 6px; font-size: 11px; font-weight: 600; color: var(--mute); }
+.item .from { display: block; margin-top: 2px; font-size: 12.5px; color: var(--mute); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.item .amt { flex: none; font-size: 14px; color: var(--mute); font-variant-numeric: tabular-nums; }
+.item.done .nm { color: var(--mute); text-decoration: line-through; }
+.item.done .from, .item.done .amt { opacity: .6; }
+.item .del { width: 32px; height: 32px; display: grid; place-items: center; color: var(--mute); margin-right: -6px; }
+
+.add { display: flex; align-items: center; gap: 14px; padding: 10px 0 10px 3px; border-bottom: 1px solid var(--line); color: var(--mute); }
+.add input { flex: 1; min-width: 0; height: 34px; border: 0; background: none; font: inherit; font-size: 15px; color: var(--ink); }
+.add input:focus { outline: none; }
+
+/* 집에 늘 있는 재료 */
+.staples { margin: 32px 12px 28px; padding: 4px 16px; border-radius: 18px; background: #ebe8e0; }
+.staples-head { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 0; font-size: 15px; font-weight: 600; text-align: left; }
+.staples-head .mute { font-size: 12px; font-weight: 400; color: var(--mute); }
+.staple { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-top: 1px solid #ddd9cf; font-size: 15px; color: var(--mute); }
+.staple small { margin-left: 4px; font-size: 12px; }
+.staple .chip { border-color: #d3cfc4; color: var(--ink); background: var(--paper); }
