@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffd24c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>냠냠 식단</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --yellow: #ffd24c;
+    --yellow-soft: #fff4bf;
+    --yellow-bg: #fcd35c;
+    --ink: #232323;
+    --sub: #9b9b9b;
+    --line: #efefef;
+    --white: #ffffff;
+    --lav: #e3dcf3;
+    --mint: #bfead5;
+    --peach: #fbd2c3;
+    --sky: #5aa9e0;
+    --apricot: #fbd9b6;
+    --face-green: #7fd5a8;
+    --face-salmon: #f6a58d;
+    --blue-text: #5a7fd6;
+    --outline: 1.6px solid var(--ink);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--white);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Malgun Gothic", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    display: flex; justify-content: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  .cute { font-family: "Jua", -apple-system, "Malgun Gothic", sans-serif; font-weight: 400; }
+
+  .app {
+    width: 100%; max-width: 400px; min-height: 100vh;
+    background: var(--white);
+    position: relative;
+    padding-bottom: 76px;
+  }
+  @media (min-width: 500px) {
+    body { background: var(--yellow-bg); align-items: center; padding: 30px 0; }
+    body::before, body::after {
+      content: ""; position: fixed; border-radius: 50%; background: #fbdc80; z-index: 0;
+    }
+    body::before { width: 520px; height: 420px; left: calc(50% - 470px); top: 18%; box-shadow: 160px 60px 0 #fbdc80; }
+    body::after { width: 460px; height: 380px; right: calc(50% - 480px); bottom: 8%; box-shadow: -120px -40px 0 #fbdc80; }
+    .app {
+      z-index: 1; min-height: 0; height: 820px; border-radius: 28px; overflow: hidden;
+      box-shadow: 0 24px 50px rgba(150, 100, 0, .18);
+    }
+    .scroll { height: calc(820px - 76px); overflow-y: auto; scrollbar-width: none; }
+    .scroll::-webkit-scrollbar { display: none; }
+  }
+
+  /* 상단 */
+  .statusbar { display: flex; justify-content: space-between; padding: 12px 22px 0; font-size: 12px; font-weight: 700; }
+  .topbar { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px 6px; }
+  .logo { font-size: 24px; letter-spacing: -0.5px; }
+  .logo i { font-style: normal; color: var(--yellow); -webkit-text-stroke: 1.2px var(--ink); }
+  .icon-btn { width: 34px; height: 34px; display: grid; place-items: center; background: none; border: 0; cursor: pointer; }
+
+  .page { display: none; padding: 0 20px 20px; }
+  .page.on { display: block; animation: pop .25s ease; }
+  @keyframes pop { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  /* 요일 아이콘 줄 */
+  .week { display: flex; justify-content: space-between; padding: 14px 0 22px; }
+  .wd { display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; background: none; border: 0; font-family: inherit; }
+  .wd .circle {
+    width: 40px; height: 40px; border-radius: 50%; background: #f5f5f5;
+    display: grid; place-items: center; font-size: 15px; color: var(--ink);
+    border: 1.6px solid transparent; transition: .15s;
+  }
+  .wd.on .circle { background: var(--yellow); border: var(--outline); }
+  .wd span { font-size: 11px; color: var(--sub); }
+  .wd.today span { color: var(--ink); font-weight: 700; }
+
+  /* 메인 카드 */
+  .sec-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 12px; }
+  .sec-head h2 { font-size: 19px; line-height: 1.35; }
+  .sec-head h2 em { font-style: normal; background: linear-gradient(transparent 60%, var(--yellow-soft) 60%); }
+  .more { font-size: 12px; color: var(--sub); background: none; border: 0; cursor: pointer; font-family: inherit; }
+
+  .hero {
+    background: var(--yellow-soft); border-radius: 6px; padding: 18px 18px 16px;
+    position: relative; overflow: hidden; margin-bottom: 26px; cursor: pointer;
+  }
+  .hero .menu-name { font-size: 26px; margin-top: 2px; }
+  .hero .side { font-size: 13px; color: #6d6450; margin-top: 4px; }
+  .hero .pot { display: block; margin: 8px auto 0; }
+  .hero .count {
+    position: absolute; right: 14px; top: 14px; font-size: 11px; text-align: center; line-height: 1.2;
+  }
+  .hero .go {
+    display: inline-flex; align-items: center; gap: 4px; margin-top: 10px;
+    background: var(--white); border: var(--outline); border-radius: 99px; padding: 6px 14px;
+    font-size: 13px; font-weight: 700;
+  }
+
+  /* 메뉴 리스트 */
+  .item { display: flex; gap: 12px; padding: 12px 0; align-items: center; cursor: pointer; }
+  .item + .item { border-top: 1px solid var(--line); }
+  .item .who { display: flex; flex-direction: column; align-items: center; gap: 2px; width: 44px; flex-shrink: 0; }
+  .item .who small { font-size: 10px; color: var(--sub); }
+  .item .body { flex: 1; min-width: 0; }
+  .item .meta { display: flex; gap: 10px; font-size: 11.5px; color: var(--blue-text); align-items: center; }
+  .item .meta span { display: inline-flex; align-items: center; gap: 3px; }
+  .item .title { font-size: 15px; font-weight: 700; margin-top: 3px; }
+  .item .sub { font-size: 12px; color: var(--sub); margin-top: 2px; }
+  .item .heart { color: var(--sub); font-size: 11px; text-align: center; }
+
+  /* 장보기 */
+  .budget {
+    display: flex; gap: 10px; margin: 6px 0 20px;
+  }
+  .budget .b {
+    flex: 1; border-radius: 16px; padding: 14px 12px; text-align: center;
+  }
+  .budget .b b { display: block; font-size: 22px; margin-top: 2px; }
+  .budget .b span { font-size: 11.5px; color: #555; }
+  .shop-row { display: flex; align-items: center; gap: 12px; padding: 12px 2px; border-bottom: 1px solid var(--line); cursor: pointer; }
+  .box {
+    width: 24px; height: 24px; border-radius: 8px; border: var(--outline); flex-shrink: 0;
+    display: grid; place-items: center; background: var(--white); transition: .15s;
+  }
+  .shop-row.done .box { background: var(--yellow); }
+  .shop-row.done .nm { color: var(--sub); text-decoration: line-through; }
+  .shop-row .nm { flex: 1; font-size: 14.5px; }
+  .shop-row .nm small { display: block; font-size: 11.5px; color: var(--blue-text); margin-top: 2px; text-decoration: none; }
+  .shop-row .pr { font-size: 14px; font-weight: 700; }
+  .shop-row.opt { opacity: .6; }
+  .group-label { font-size: 12px; color: var(--sub); margin: 18px 0 2px; }
+  .tip { margin-top: 18px; background: #f7f7f7; border-radius: 14px; padding: 14px; font-size: 12px; color: #666; line-height: 1.7; }
+
+  /* 레시피 */
+  .blobs { display: flex; gap: 8px; overflow-x: auto; padding: 4px 2px 16px; scrollbar-width: none; }
+  .blobs::-webkit-scrollbar { display: none; }
+  .blob {
+    flex-shrink: 0; border: 0; padding: 9px 14px; font-size: 13px; cursor: pointer; font-family: inherit;
+    color: var(--ink); position: relative; transition: .15s;
+  }
+  .blob.on { outline: var(--outline); }
+  .blob.on::after {
+    content: "✓"; position: absolute; top: -6px; right: -6px; width: 16px; height: 16px;
+    background: var(--yellow); border: 1.4px solid var(--ink); border-radius: 4px;
+    font-size: 10px; display: grid; place-items: center; line-height: 1;
+  }
+  .r-card { border: 1px solid var(--line); border-radius: 18px; padding: 16px; margin-bottom: 14px; }
+  .r-card .r-top { display: flex; gap: 12px; align-items: center; }
+  .r-card h3 { font-size: 15px; }
+  .r-card .r-meta { font-size: 11.5px; color: var(--blue-text); margin-top: 3px; }
+  .r-card .pick {
+    margin-left: auto; font-size: 11px; padding: 4px 9px; border-radius: 99px;
+    background: var(--yellow); border: 1.4px solid var(--ink); white-space: nowrap;
+  }
+  .r-card h4 { font-size: 15px; margin: 16px 0 6px; display: flex; align-items: center; gap: 6px; }
+  .r-card h4::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--yellow); border: 1.3px solid var(--ink); }
+  .r-card p { font-size: 13.5px; line-height: 1.7; color: #444; }
+  .steps { list-style: none; counter-reset: s; }
+  .steps li { counter-increment: s; display: flex; gap: 10px; font-size: 13.5px; line-height: 1.6; padding: 5px 0; color: #333; }
+  .steps li::before {
+    content: counter(s); flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%;
+    background: var(--yellow-soft); font-size: 11px; font-weight: 700; display: grid; place-items: center; margin-top: 1px;
+  }
+  .warn { margin-top: 10px; font-size: 12px !important; background: #fff6e0; border-radius: 10px; padding: 8px 10px; color: #8a6400 !important; }
+  .yt {
+    display: flex; justify-content: center; align-items: center; gap: 6px; margin-top: 14px;
+    border: var(--outline); border-radius: 12px; padding: 11px; font-weight: 700; font-size: 14px;
+    color: var(--ink); text-decoration: none; background: var(--white);
+  }
+  .yt:active { background: var(--yellow-soft); }
+  .empty { text-align: center; padding: 30px 10px; color: var(--sub); font-size: 13.5px; line-height: 1.7; }
+  .empty svg { margin-bottom: 10px; }
+
+  /* 하단 탭 */
+  nav {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 76px; background: var(--white);
+    border-top: 1px solid var(--line); display: flex; align-items: center; padding-bottom: env(safe-area-inset-bottom);
+  }
+  @media (max-width: 499px) { nav { position: fixed; max-width: 400px; margin: 0 auto; } }
+  nav button {
+    flex: 1; background: none; border: 0; cursor: pointer; font-family: inherit; font-size: 11px; color: var(--ink);
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+  nav button svg .fill { fill: transparent; transition: .15s; }
+  nav button.on svg .fill { fill: var(--yellow); }
+  nav .center { position: relative; }
+  nav .cookie { margin-top: -26px; filter: drop-shadow(0 3px 0 rgba(0,0,0,.08)); }
+  .bubble {
+    position: absolute; bottom: 72px; left: 50%; transform: translateX(-50%);
+    background: var(--yellow); border: 1.4px solid var(--ink); border-radius: 99px;
+    padding: 5px 12px; font-size: 11.5px; white-space: nowrap; animation: bob 2s ease-in-out infinite;
+  }
+  .bubble::after {
+    content: ""; position: absolute; bottom: -6px; left: 50%; width: 9px; height: 9px; background: var(--yellow);
+    border-right: 1.4px solid var(--ink); border-bottom: 1.4px solid var(--ink); transform: translateX(-50%) rotate(45deg);
+  }
+  @keyframes bob { 50% { transform: translateX(-50%) translateY(-3px); } }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="scroll">
+    <div class="statusbar"><span id="clock">12:22</span><span>●●● ▮</span></div>
+    <div class="topbar">
+      <div class="logo cute">냠냠 <i>식단</i></div>
+      <button class="icon-btn" aria-label="검색">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#232323" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+      </button>
+    </div>
+
+    <!-- 식단 -->
+    <section class="page on" id="p-menu">
+      <div class="week" id="week"></div>
+
+      <div class="sec-head">
+        <h2 id="hero-head">오늘의<br><em>저녁 메뉴</em></h2>
+        <button class="more" data-go="recipe">레시피 보기 ›</button>
+      </div>
+      <div class="hero" id="hero"></div>
+
+      <div class="sec-head"><h2>이번 주 메뉴</h2><span class="more">고기 5번 · 도시락 6번</span></div>
+      <div id="list"></div>
+    </section>
+
+    <!-- 장보기 -->
+    <section class="page" id="p-shop">
+      <div class="sec-head" style="margin-top:10px"><h2>이번 주<br><em>장보기 목록</em></h2></div>
+      <div class="budget">
+        <div class="b" style="background:var(--yellow-soft)"><span>필수 재료</span><b class="cute" id="sum-main"></b></div>
+        <div class="b" style="background:var(--mint)"><span>남은 금액</span><b class="cute" id="sum-left"></b></div>
+      </div>
+      <div id="shop"></div>
+      <div class="tip">
+        가격은 대략적인 추정치예요. 첫 장보기 후 영수증으로 맞춰주세요.<br>
+        <b>처음 한 번만</b> 간장 · 고추장 · 고춧가루 · 된장 · 설탕 · 다진마늘 · 참기름 · 식용유 · 소금 · 후추
+      </div>
+    </section>
+
+    <!-- 레시피 -->
+    <section class="page" id="p-recipe">
+      <div class="sec-head" style="margin-top:10px"><h2>어떤 메뉴를<br><em>만들어 볼까요?</em></h2></div>
+      <div class="blobs" id="blobs"></div>
+      <div id="recipes"></div>
+    </section>
+  </div>
+
+  <nav>
+    <button class="on" data-page="menu">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="#232323" stroke-width="1.7" stroke-linejoin="round"><path class="fill" d="M4 11.5L13 4l9 7.5V22H4z"/><path d="M10.5 22v-5.5h5V22"/></svg>
+      홈
+    </button>
+    <button class="center" data-page="recipe" id="today-btn">
+      <span class="bubble" id="bubble"></span>
+      <svg class="cookie" width="56" height="56" viewBox="0 0 56 56" id="cookie"></svg>
+      레시피
+    </button>
+    <button data-page="shop">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="#232323" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"><path class="fill" d="M5 8h17l-2 9H7z"/><path d="M2.5 4.5H5L7 17"/><circle cx="9" cy="21" r="1.4"/><circle cx="18" cy="21" r="1.4"/></svg>
+      장보기
+    </button>
+  </nav>
+</div>
+
+<script>
+const DAYS = [
+  { dow: '월', main: '닭볶음탕', side: '넉넉히 끓여서 다음날 점심까지', meat: true, box: true, diff: 2 },
+  { dow: '화', main: '대패삼겹 콩나물불고기', side: '김치', meat: true, box: true, diff: 1 },
+  { dow: '수', main: '된장찌개', side: '계란말이', meat: false, box: false, diff: 2 },
+  { dow: '목', main: '제육볶음', side: '양배추 쌈', meat: true, box: true, diff: 1 },
+  { dow: '금', main: '돼지고기 김치찌개', side: '계란후라이', meat: true, box: false, diff: 1 },
+  { dow: '토', main: '대패삼겹 양배추 덮밥', side: '단품 메뉴', meat: true, box: true, diff: 1 },
+  { dow: '일', main: '냉장고 털이 볶음밥', side: '김치', meat: false, box: true, diff: 1 },
+];
+
+const SHOP = [
+  { name: '닭볶음탕용 닭', amt: '1kg', price: 8500, use: '월' },
+  { name: '대패삼겹살', amt: '600g', price: 9000, use: '화 · 토' },
+  { name: '돼지 앞다리살', amt: '600g', price: 9000, use: '목 · 금 (반은 냉동)' },
+  { name: '계란', amt: '10구', price: 3500, use: '수 · 금 · 일' },
+  { name: '두부', amt: '2모', price: 3000, use: '수 · 금' },
+  { name: '양배추', amt: '1/2통', price: 2500, use: '목 · 토 · 일' },
+  { name: '감자', amt: '3개', price: 2500, use: '월 · 수' },
+  { name: '양파', amt: '3개', price: 2000, use: '거의 매일' },
+  { name: '대파', amt: '1단', price: 2000, use: '거의 매일' },
+  { name: '콩나물', amt: '1봉', price: 1500, use: '화' },
+  { name: '애호박', amt: '1개', price: 1500, use: '수' },
+  { name: '당근', amt: '1개', price: 1000, use: '월 · 일' },
+  { name: '쌀', amt: '2kg', price: 6500, use: '집에 없으면', optional: true },
+  { name: '김치', amt: '소포장', price: 4000, use: '집에 없으면', optional: true },
+];
+
+const RECIPES = {
+  '닭볶음탕': [
+    {
+      title: '백종원 · 닭볶음탕', meta: '조회수 951만 · 19분',
+      url: 'https://www.youtube.com/watch?v=eeiqjyYgPew',
+      ing: '닭 1마리(10호), 물 3컵, 감자 2, 양파 1, 당근 1/3, 대파 2대, 새송이·표고 2개씩, 청양고추 3, 홍고추 2',
+      sauce: '진간장 4/5컵, 황설탕 3큰술, 굵은 고춧가루 1/2컵, 고운 고춧가루 1큰술, 다진마늘 1큰술, 후추',
+      steps: [
+        '닭을 씻어 끓는 물에 살짝 데친 뒤 찬물에 헹궈요',
+        '냄비에 닭, 물, 감자, 양파, 설탕을 넣고 뚜껑 열고 센불로 끓여요',
+        '감자가 반쯤 익으면 당근, 버섯을 넣어요',
+        '15분 뒤 고춧가루, 이어서 간장 · 마늘 · 후추를 넣고 끓여요',
+        '대파, 고추 넣고 숨만 죽으면 완성!',
+      ],
+    },
+    {
+      title: '정호영 · 15분 황금 레시피', meta: '조회수 368만 · 11분', best: true,
+      url: 'https://www.youtube.com/watch?v=pNtwZuhYQeg',
+      ing: '닭 1마리(1.5kg), 감자 2, 양파 1/2, 대파 1대, 다진마늘 1큰술, 식용유',
+      sauce: '간장 6, 설탕 4, 맛술 3, 고춧가루 4, 굴소스 2, 고추장 3 (큰술), 후추',
+      steps: [
+        '닭을 씻어 핏물만 빼요 (데치기 없음!)',
+        '팬에 기름 넉넉히, 닭 · 마늘 · 간장 넣고 색 밸 때까지 볶아요',
+        '물 300ml와 나머지 양념을 넣고 끓여요',
+        '감자, 양파 넣고 감자가 익을 때까지',
+        '대파, 후추 넣고 중약불로 5분 더!',
+      ],
+    },
+    {
+      title: '뚝딱이형 · 배달집 레시피', meta: '조회수 361만 · 1분 쇼츠',
+      url: 'https://www.youtube.com/watch?v=Ax8ff8w5LUw',
+      ing: '닭 1마리, 감자 2(1개는 갈아서), 당근 조금, 양파 1, 대파 2, 청양고추',
+      sauce: '간장 1/2컵, 설탕 3, 고춧가루 3, 고추장 1, 된장 0.5, 다진마늘 2, 소고기다시다 0.5',
+      steps: [
+        '닭에 소금 2, 설탕 2, 후추 넣고 우유에 2시간 재워요',
+        '식용유 2 + 고춧가루 3 + 마늘 1 + 대파로 약불 고추기름',
+        '닭 넣고 겉면이 익을 때까지 볶아요',
+        '간장 1/2컵, 설탕 3 넣고 약불 2분',
+        '물 2컵, 감자, 당근, 고추장, 된장 넣고 중불 20분',
+        '양파, 다시다 넣고 감자 1개 갈아 넣어 걸쭉하게',
+        '불 끄고 마늘 1, 청양고추 넣으면 완성!',
+      ],
+      warn: '자동 자막 기준이라 "우유", "설탕 3"은 영상으로 한 번 확인해 주세요',
+    },
+  ],
+};
+
+/* 귀여운 얼굴 캐릭터 */
+const FACE_COLORS = ['#f6a58d', '#7fd5a8', '#ffd24c', '#b9a8e6', '#5aa9e0', '#fbb98a', '#9fd3e8'];
+const MOODS = ['smile', 'wink', 'grin', 'smile', 'wink', 'grin', 'smile'];
+function face(color, mood = 'smile', size = 40) {
+  const eyes = mood === 'wink'
+    ? '<circle cx="15" cy="18" r="1.8" fill="#232323"/><path d="M23 18h4" stroke="#232323" stroke-width="1.8" stroke-linecap="round"/>'
+    : '<circle cx="15" cy="18" r="1.8" fill="#232323"/><circle cx="25" cy="18" r="1.8" fill="#232323"/>';
+  const mouth = mood === 'grin'
+    ? '<path d="M14 24q6 6 12 0z" fill="#232323"/>'
+    : '<path d="M14.5 24q5.5 4.5 11 0" stroke="#232323" stroke-width="1.8" fill="none" stroke-linecap="round"/>';
+  return `<svg width="${size}" height="${size}" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18.5" fill="${color}" stroke="#232323" stroke-width="1.5"/>${eyes}${mouth}<circle cx="10.5" cy="23" r="2" fill="#fff" opacity=".45"/><circle cx="29.5" cy="23" r="2" fill="#fff" opacity=".45"/></svg>`;
+}
+
+/* 쿠키(물결 원) 모양 */
+function scallop(cx, cy, r, bumps, amp) {
+  let d = '';
+  for (let i = 0; i <= 360; i += 3) {
+    const a = i * Math.PI / 180;
+    const rr = r + amp * Math.cos(a * bumps);
+    d += (i ? 'L' : 'M') + (cx + rr * Math.cos(a)).toFixed(1) + ' ' + (cy + rr * Math.sin(a)).toFixed(1);
+  }
+  return d + 'Z';
+}
+document.getElementById('cookie').innerHTML =
+  `<path d="${scallop(28, 28, 24, 10, 2.2)}" fill="#ffd24c" stroke="#232323" stroke-width="1.6"/>
+   <circle cx="20" cy="22" r="1.6" fill="#c9952a"/><circle cx="33" cy="20" r="1.6" fill="#c9952a"/>
+   <circle cx="27" cy="33" r="1.6" fill="#c9952a"/><circle cx="37" cy="31" r="1.6" fill="#c9952a"/><circle cx="18" cy="34" r="1.6" fill="#c9952a"/>`;
+
+/* 냄비 일러스트 */
+const POT = `<svg class="pot" width="150" height="92" viewBox="0 0 150 92" fill="none" stroke="#232323" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M52 14c-4-6 4-8 0-14M75 12c-4-6 4-8 0-14M98 14c-4-6 4-8 0-14" opacity=".5"/>
+  <ellipse cx="75" cy="30" rx="50" ry="9" fill="#fbd2c3"/>
+  <path d="M25 30v30c0 14 22 24 50 24s50-10 50-24V30" fill="#f6a58d"/>
+  <path d="M25 30c0 5 22 9 50 9s50-4 50-9"/>
+  <path d="M25 42h-11c-4 0-4 8 0 8h11M125 42h11c4 0 4 8 0 8h-11"/>
+  <circle cx="60" cy="58" r="2" fill="#232323"/><circle cx="90" cy="58" r="2" fill="#232323"/>
+  <path d="M68 64q7 6 14 0" />
+</svg>`;
+
+const DONE_KEY = 'meal-shop-done';
+let done = {};
+try { done = JSON.parse(localStorage.getItem(DONE_KEY) || '{}'); } catch (e) {}
+const saveDone = () => { try { localStorage.setItem(DONE_KEY, JSON.stringify(done)); } catch (e) {} };
+
+const won = n => n.toLocaleString('ko-KR') + '원';
+const todayIdx = (new Date().getDay() + 6) % 7;
+let selDay = todayIdx;
+let currentRecipe = DAYS[todayIdx].main;
+
+const ICON_MEAT = '<svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M9.5 2.5c3 0 4.5 2 4 4.5-.6 3-4 4.6-6.5 4l-2.5 2.5-2-2L5 9c-.6-2.5 1.5-6.5 4.5-6.5z"/></svg>';
+const ICON_BOX = '<svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="2" y="5" width="12" height="8" rx="2"/><path d="M2 8h12M5 5V3.5h6V5"/></svg>';
+const ICON_STAR = '<svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5l2 4.3 4.6.5-3.4 3.1 1 4.6L8 11.6 3.8 14l1-4.6L1.4 6.3 6 5.8z"/></svg>';
+
+function renderWeek() {
+  document.getElementById('week').innerHTML = DAYS.map((d, i) => `
+    <button class="wd ${i === selDay ? 'on' : ''} ${i === todayIdx ? 'today' : ''}" data-i="${i}">
+      <div class="circle cute">${d.dow}</div><span>${i === todayIdx ? '오늘' : d.main.slice(0, 3)}</span>
+    </button>`).join('');
+  document.querySelectorAll('.wd').forEach(el => el.addEventListener('click', () => { selDay = +el.dataset.i; renderWeek(); renderHero(); }));
+}
+
+function renderHero() {
+  const d = DAYS[selDay];
+  document.getElementById('hero-head').innerHTML = selDay === todayIdx ? '오늘의<br><em>저녁 메뉴</em>' : `${d.dow}요일<br><em>저녁 메뉴</em>`;
+  document.getElementById('hero').innerHTML = `
+    <div class="count">${'★'.repeat(d.diff)}<br>난이도</div>
+    <div class="menu-name cute">${d.main}</div>
+    <div class="side">${d.side === '단품 메뉴' ? '단품 메뉴' : '+ ' + d.side}</div>
+    ${POT}
+    <div style="text-align:center"><span class="go">레시피 보러 가기 ›</span></div>`;
+  document.getElementById('hero').onclick = () => { currentRecipe = d.main; go('recipe'); };
+  document.getElementById('bubble').textContent = `오늘은 ${DAYS[todayIdx].main.split(' ')[0]}!`;
+}
+
+function renderList() {
+  document.getElementById('list').innerHTML = DAYS.map((d, i) => `
+    <div class="item" data-i="${i}">
+      <div class="who">${face(FACE_COLORS[i], MOODS[i])}<small>${d.dow}요일</small></div>
+      <div class="body">
+        <div class="meta">
+          ${d.meat ? `<span>${ICON_MEAT}고기</span>` : ''}
+          ${d.box ? `<span>${ICON_BOX}도시락</span>` : ''}
+          <span>${ICON_STAR.repeat(d.diff)}</span>
+        </div>
+        <div class="title">${d.main}</div>
+        <div class="sub">${d.side === '단품 메뉴' ? '단품 메뉴' : '+ ' + d.side}</div>
+      </div>
+      <div class="heart">${RECIPES[d.main] ? '레시피<br>' + RECIPES[d.main].length + '개' : ''}</div>
+    </div>`).join('');
+  document.querySelectorAll('.item').forEach(el => el.addEventListener('click', () => { currentRecipe = DAYS[el.dataset.i].main; go('recipe'); }));
+}
+
+function renderShop() {
+  const row = (s, i) => `
+    <div class="shop-row ${done[i] ? 'done' : ''} ${s.optional ? 'opt' : ''}" data-i="${i}">
+      <div class="box">${done[i] ? '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#232323" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5l2.5 2.5L11 4.5"/></svg>' : ''}</div>
+      <div class="nm">${s.name} <span style="color:var(--sub);font-size:12.5px">${s.amt}</span><small>${s.use}</small></div>
+      <div class="pr">${won(s.price)}</div>
+    </div>`;
+  document.getElementById('shop').innerHTML =
+    SHOP.map((s, i) => s.optional ? '' : row(s, i)).join('') +
+    '<div class="group-label">집에 없으면 추가</div>' +
+    SHOP.map((s, i) => s.optional ? row(s, i) : '').join('');
+  document.querySelectorAll('.shop-row').forEach(el =>
+    el.addEventListener('click', () => { const i = el.dataset.i; done[i] = !done[i]; saveDone(); renderShop(); }));
+  const main = SHOP.filter(s => !s.optional).reduce((a, s) => a + s.price, 0);
+  const left = SHOP.filter((s, i) => !s.optional && !done[i]).reduce((a, s) => a + s.price, 0);
+  document.getElementById('sum-main').textContent = won(main);
+  document.getElementById('sum-left').textContent = won(left);
+}
+
+const BLOB_STYLES = [
+  'background:var(--peach);border-radius:20px 20px 20px 6px',
+  'background:var(--mint);border-radius:6px 20px 20px 20px',
+  'background:var(--lav);border-radius:99px',
+  'background:var(--apricot);border-radius:20px 6px 20px 20px',
+  'background:#cfe6f7;border-radius:99px',
+  'background:var(--yellow-soft);border-radius:20px 20px 6px 20px',
+  'background:#e6f4c8;border-radius:6px 20px 20px 20px',
+];
+function renderRecipes() {
+  document.getElementById('blobs').innerHTML = DAYS.map((d, i) =>
+    `<button class="blob ${d.main === currentRecipe ? 'on' : ''}" style="${BLOB_STYLES[i]}" data-menu="${d.main}">${d.main.split(' ')[0]}</button>`).join('');
+  document.querySelectorAll('.blob').forEach(el =>
+    el.addEventListener('click', () => { currentRecipe = el.dataset.menu; renderRecipes(); }));
+
+  const list = RECIPES[currentRecipe];
+  const idx = DAYS.findIndex(d => d.main === currentRecipe);
+  document.getElementById('recipes').innerHTML = !list
+    ? `<div class="empty">${face('#e3dcf3', 'wink', 64)}<br><b style="color:#232323">${currentRecipe}</b> 레시피는 아직 준비 중이에요<br>Claude에게 "이 메뉴 레시피 찾아줘" 하면 채워져요</div>`
+    : list.map((r, n) => `
+      <div class="r-card">
+        <div class="r-top">
+          ${face(FACE_COLORS[(idx + n) % FACE_COLORS.length], MOODS[n], 38)}
+          <div><h3>${r.title}</h3><div class="r-meta">${r.meta}</div></div>
+          ${r.best ? '<span class="pick">초보 추천</span>' : ''}
+        </div>
+        <h4 class="cute">재료</h4><p>${r.ing}</p>
+        <h4 class="cute">양념</h4><p>${r.sauce}</p>
+        <h4 class="cute">만드는 법</h4><ol class="steps">${r.steps.map(s => `<li>${s}</li>`).join('')}</ol>
+        ${r.warn ? `<p class="warn">${r.warn}</p>` : ''}
+        <a class="yt" href="${r.url}" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 18 18"><rect x="1" y="3.5" width="16" height="11" rx="3.5" fill="#ff4d4d" stroke="#232323" stroke-width="1.4"/><path d="M7.5 6.8v4.4L11.3 9z" fill="#fff"/></svg>
+          유튜브에서 보기
+        </a>
+      </div>`).join('');
+}
+
+function go(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.toggle('on', p.id === 'p-' + page));
+  document.querySelectorAll('nav button').forEach(b => b.classList.toggle('on', b.dataset.page === page));
+  if (page === 'recipe') renderRecipes();
+  const sc = document.querySelector('.scroll');
+  if (sc) sc.scrollTop = 0;
+  window.scrollTo(0, 0);
+}
+document.querySelectorAll('nav button').forEach(b => b.addEventListener('click', () => go(b.dataset.page)));
+document.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', () => { currentRecipe = DAYS[selDay].main; go(b.dataset.go); }));
+
+const now = new Date();
+document.getElementById('clock').textContent = now.getHours() + ':' + String(now.getMinutes()).padStart(2, '0');
+
+renderWeek();
+renderHero();
+renderList();
+renderShop();
+renderRecipes();
+</script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+/* 색·글꼴 (SPEC 8장) */
+:root {
+  --paper: #f6f4ef;
+  --ink: #1b1b1a;
+  --mute: #8b877e;
+  --line: #e4e0d6;
+  --point: #ffd24c;
+  --nav-h: 84px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Pretendard", -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: -0.01em;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+}
+#root { width: 100%; display: flex; justify-content: center; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+svg { display: block; }
+
+/* 선 아이콘 공통: 굵기 1.6 통일 */
+.ic { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+
+/* 앱 틀: 폰에선 꽉 차게, PC에선 폰 크기 액자 */
+.app { width: 100%; max-width: 400px; min-height: 100vh; position: relative; }
+.scroll { padding-bottom: var(--nav-h); }
+@media (min-width: 500px) {
+  body { align-items: center; padding: 32px 0; background: #e9e6de; }
+  .app { min-height: 0; height: 844px; background: var(--paper); border-radius: 32px; overflow: hidden; box-shadow: 0 0 0 1px #d8d4c9; }
+  .scroll { height: 100%; overflow-y: auto; scrollbar-width: none; }
+}
+
+/* 버튼 */
+.btn { height: 46px; border-radius: 23px; padding: 0 18px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-size: 14px; font-weight: 700; white-space: nowrap; }
+.btn.dark { background: var(--ink); color: var(--paper); flex: 1; }
+.btn.ghost { border: 1.5px solid var(--ink); }
+.btn.round { width: 46px; padding: 0; flex: none; }
+.btn.wide { width: 100%; margin-top: 18px; }
+.btn:disabled { opacity: .35; cursor: default; }
+.chip { height: 32px; padding: 0 14px; border-radius: 16px; border: 1.5px solid var(--line); font-size: 13px; font-weight: 600; }
+
+/* 입력 */
+.text-input { width: 100%; height: 52px; margin-top: 14px; padding: 0 16px; border: 1.5px solid var(--line); border-radius: 14px; background: #fff; font: inherit; font-size: 16px; color: var(--ink); }
+.text-input:focus { outline: none; border-color: var(--ink); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+
+/* 판 안의 재료 목록 */
+.sheet-sub { font-size: 13px; color: var(--mute); margin-bottom: 6px; }
+.ing-row { display: flex; justify-content: space-between; gap: 12px; padding: 13px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+.ing-row span:first-child { font-weight: 600; }
+.ing-row small { margin-left: 6px; font-size: 11px; font-weight: 600; color: var(--mute); }
+.ing-row span:last-child { color: var(--mute); }
+.ing-staple { margin-top: 16px; font-size: 13px; line-height: 1.6; color: var(--mute); }
+.ing-staple b { display: block; color: var(--ink); font-size: 12px; margin-bottom: 2px; }
+
+/* 준비 중 화면 */
+.placeholder { padding: 28px 20px; }
+.placeholder h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.04em; }
+.placeholder p { margin-top: 8px; font-size: 14px; color: var(--mute); line-height: 1.6; }

@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f6f4ef">
+<title>저녁 식단</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root {
+    --paper: #f6f4ef;
+    --ink: #1b1b1a;
+    --mute: #8b877e;
+    --line: #e4e0d6;
+    --point: #ffd24c;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--paper); color: var(--ink);
+    font-family: "Pretendard", -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    -webkit-font-smoothing: antialiased; letter-spacing: -0.01em;
+    display: flex; justify-content: center; min-height: 100vh;
+  }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+  svg { display: block; }
+  .ic { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+
+  .app { width: 100%; max-width: 400px; min-height: 100vh; position: relative; padding-bottom: 84px; }
+  @media (min-width: 500px) {
+    body { align-items: center; padding: 32px 0; background: #e9e6de; }
+    .app { min-height: 0; height: 844px; background: var(--paper); border-radius: 32px; overflow: hidden; box-shadow: 0 0 0 1px #d8d4c9; }
+    .scroll { height: 100%; overflow-y: auto; scrollbar-width: none; padding-bottom: 84px; }
+    .app { padding-bottom: 0; }
+  }
+
+  /* 상단 */
+  .top { display: flex; justify-content: space-between; align-items: center; padding: 22px 20px 10px; }
+  .top .wk { font-size: 13px; color: var(--mute); }
+  .top .wk b { color: var(--ink); font-weight: 700; margin-right: 6px; }
+  .top .ib { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 50%; }
+
+  /* 요일 줄 */
+  .days { display: grid; grid-template-columns: repeat(7, 1fr); padding: 6px 12px 0; }
+  .d { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 8px 0 10px; position: relative; }
+  .d .w { font-size: 11px; color: var(--mute); }
+  .d .n { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 50%; font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .d.today .w { color: var(--ink); font-weight: 700; }
+  .d.on .n { background: var(--ink); color: var(--paper); }
+  .d .box { height: 4px; width: 4px; border-radius: 50%; background: transparent; }
+  .d.has-box .box { background: var(--mute); }
+
+  /* 주인공: 선택한 날의 메뉴 */
+  .hero { margin: 14px 12px 0; background: var(--point); border-radius: 24px; padding: 22px 22px 20px; }
+  .hero .when { display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; }
+  .hero h1 { font-size: 40px; line-height: 1.12; font-weight: 800; letter-spacing: -0.045em; margin: 26px 0 8px; word-break: keep-all; }
+  .hero .side { font-size: 15px; }
+  .hero .facts { display: flex; gap: 16px; margin-top: 22px; padding-top: 14px; border-top: 1.5px solid rgba(27,27,26,.18); font-size: 13px; }
+  .hero .facts span { display: inline-flex; align-items: center; gap: 5px; }
+  .hero .facts .ic { width: 16px; height: 16px; }
+  .hero .acts { display: flex; gap: 8px; margin-top: 18px; }
+  .btn { height: 46px; border-radius: 23px; padding: 0 18px; display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; }
+  .btn.dark { background: var(--ink); color: var(--paper); flex: 1; justify-content: center; }
+  .btn.ghost { border: 1.5px solid var(--ink); }
+  .btn .ic { width: 18px; height: 18px; }
+
+  /* 이번 주 */
+  .sec { display: flex; justify-content: space-between; align-items: baseline; padding: 34px 20px 6px; }
+  .sec h2 { font-size: 20px; font-weight: 800; letter-spacing: -0.03em; }
+  .sec .act { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; color: var(--mute); }
+  .sec .act .ic { width: 16px; height: 16px; }
+
+  .rows { padding: 0 20px; }
+  .row { display: grid; grid-template-columns: 44px 1fr auto; align-items: center; gap: 12px; padding: 15px 0; border-bottom: 1px solid var(--line); width: 100%; text-align: left; }
+  .row .dw { font-size: 12px; color: var(--mute); line-height: 1.3; }
+  .row .dw b { display: block; font-size: 18px; color: var(--ink); font-weight: 700; font-variant-numeric: tabular-nums; }
+  .row .nm { font-size: 16px; font-weight: 600; }
+  .row .tg { font-size: 12.5px; color: var(--mute); margin-top: 3px; }
+  .row .ri { display: flex; gap: 8px; color: var(--mute); }
+  .row .ri .ic { width: 18px; height: 18px; }
+  .row.on .nm { text-decoration: underline; text-decoration-color: var(--point); text-decoration-thickness: 6px; text-underline-offset: -1px; text-decoration-skip-ink: none; }
+  .row.note .nm { color: var(--mute); font-weight: 500; }
+
+  .sum { display: flex; gap: 18px; padding: 16px 20px 28px; font-size: 13px; color: var(--mute); }
+  .sum b { color: var(--ink); }
+
+  /* 하단 탭 */
+  nav { position: fixed; bottom: 0; left: 0; right: 0; max-width: 400px; margin: 0 auto; height: 84px; background: var(--paper); border-top: 1px solid var(--line); display: grid; grid-template-columns: repeat(4, 1fr); padding: 10px 8px env(safe-area-inset-bottom); }
+  @media (min-width: 500px) { nav { position: absolute; } }
+  nav button { display: flex; flex-direction: column; align-items: center; gap: 5px; font-size: 11px; color: var(--mute); }
+  nav button .ic { width: 24px; height: 24px; }
+  nav button.on { color: var(--ink); font-weight: 700; }
+  nav button.on .ic .f { fill: var(--point); }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="scroll">
+    <header class="top">
+      <div class="wk"><b>10월 넷째 주</b>19일 – 25일</div>
+      <button class="ib" aria-label="지난 식단"><svg class="ic" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v4h4"/><path d="M12 8v4l3 2"/></svg></button>
+    </header>
+
+    <div class="days" id="days"></div>
+    <section class="hero" id="hero"></section>
+
+    <div class="sec">
+      <h2>이번 주 저녁</h2>
+      <button class="act"><svg class="ic" viewBox="0 0 24 24"><path d="M16 3h5v5"/><path d="M4 20 21 3"/><path d="M21 16v5h-5"/><path d="M15 15l6 6"/><path d="M4 4l5 5"/></svg>다시 추천받기</button>
+    </div>
+    <div class="rows" id="rows"></div>
+    <div class="sum" id="sum"></div>
+  </div>
+
+  <nav>
+    <button class="on"><svg class="ic" viewBox="0 0 24 24"><rect class="f" x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>식단</button>
+    <button><svg class="ic" viewBox="0 0 24 24"><path class="f" d="M4 5.5C4 4.7 4.7 4 5.5 4H11v16H5.5c-.8 0-1.5-.7-1.5-1.5zM20 5.5c0-.8-.7-1.5-1.5-1.5H13v16h5.5c.8 0 1.5-.7 1.5-1.5z"/></svg>레시피</button>
+    <button><svg class="ic" viewBox="0 0 24 24"><path class="f" d="M5 8h14l-1.2 11.1a1.5 1.5 0 0 1-1.5 1.4H7.7a1.5 1.5 0 0 1-1.5-1.4z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>장보기</button>
+    <button><svg class="ic" viewBox="0 0 24 24"><path class="f" d="M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.4 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10z"/></svg>찜</button>
+  </nav>
+</div>
+
+<script>
+const I = {
+  clock: '<svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>',
+  level: '<svg class="ic" viewBox="0 0 24 24"><path d="M5 19v-4M12 19V10M19 19V5"/></svg>',
+  box: '<svg class="ic" viewBox="0 0 24 24"><rect x="3.5" y="8" width="17" height="11" rx="2.5"/><path d="M3.5 12.5h17M8.5 8V6h7v2"/></svg>',
+  arrow: '<svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+  list: '<svg class="ic" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6l1 1 1.5-1.5M4 12l1 1 1.5-1.5M4 18l1 1 1.5-1.5"/></svg>',
+};
+
+const WEEK = [
+  { date: 19, dow: '월', main: '닭볶음탕', side: '넉넉히 끓여서 내일 점심까지', tags: ['닭', '국물'], min: 40, lv: '보통', box: '화' },
+  { date: 20, dow: '화', main: '대패삼겹 콩나물불고기', side: '+ 김치', tags: ['돼지', '볶음'], min: 20, lv: '쉬움' },
+  { date: 21, dow: '수', main: '된장찌개', side: '+ 계란말이', tags: ['두부', '국물'], min: 25, lv: '보통' },
+  { date: 22, dow: '목', main: '제육볶음', side: '+ 양배추 쌈', tags: ['돼지', '볶음'], min: 25, lv: '쉬움', box: '금' },
+  { date: 23, dow: '금', main: '돼지고기 김치찌개', side: '+ 계란후라이', tags: ['돼지', '국물'], min: 25, lv: '쉬움' },
+  { date: 24, dow: '토', main: '대패삼겹 양배추덮밥', side: '한 그릇 메뉴', tags: ['돼지', '덮밥'], min: 15, lv: '쉬움', box: '일' },
+  { date: 25, dow: '일', main: '냉장고 털이 볶음밥', side: '+ 김치', tags: ['남은 재료', '볶음'], min: 15, lv: '쉬움' },
+];
+const todayIdx = 2; // 시안: 10월 21일(수) 기준
+let sel = todayIdx;
+
+function render() {
+  document.getElementById('days').innerHTML = WEEK.map((d, i) => `
+    <button class="d ${i === sel ? 'on' : ''} ${i === todayIdx ? 'today' : ''} ${d.box ? 'has-box' : ''}" data-i="${i}">
+      <span class="w">${i === todayIdx ? '오늘' : d.dow}</span><span class="n">${d.date}</span><span class="box"></span>
+    </button>`).join('');
+
+  const d = WEEK[sel];
+  document.getElementById('hero').innerHTML = `
+    <div class="when"><span>${sel === todayIdx ? '오늘' : d.dow + '요일'} 저녁</span><span>${d.tags.join(' · ')}</span></div>
+    <h1>${d.main}</h1>
+    <p class="side">${d.side}</p>
+    <div class="facts">
+      <span>${I.clock}${d.min}분</span>
+      <span>${I.level}${d.lv}</span>
+      ${d.box ? `<span>${I.box}${d.box} 점심 도시락</span>` : ''}
+    </div>
+    <div class="acts">
+      <button class="btn dark">레시피 보기 ${I.arrow}</button>
+      <button class="btn ghost">${I.list}재료</button>
+    </div>`;
+
+  document.getElementById('rows').innerHTML = WEEK.map((d, i) => `
+    <button class="row ${i === sel ? 'on' : ''}" data-i="${i}">
+      <span class="dw"><b>${d.date}</b>${d.dow}</span>
+      <span><div class="nm">${d.main}</div><div class="tg">${d.tags.join(' · ')} · ${d.min}분</div></span>
+      <span class="ri">${d.box ? I.box : ''}</span>
+    </button>`).join('');
+
+  const meat = WEEK.filter(d => ['닭', '돼지', '소'].includes(d.tags[0])).length;
+  const boxes = WEEK.filter(d => d.box).length;
+  document.getElementById('sum').innerHTML = `<span>고기 <b>${meat}번</b></span><span>국물 <b>${WEEK.filter(d => d.tags[1] === '국물').length}번</b></span><span>도시락 <b>${boxes}번</b></span>`;
+
+  document.querySelectorAll('[data-i]').forEach(el => el.onclick = () => { sel = +el.dataset.i; render(); });
+}
+render();
+</script>
+</body>
+</html>
