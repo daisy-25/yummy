@@ -40,3 +40,9 @@ export function weekRange(monday: Date): string {
   const end = sunday.getMonth() === monday.getMonth() ? `${sunday.getDate()}일` : `${sunday.getMonth() + 1}월 ${sunday.getDate()}일`
   return `${monday.getDate()}일 – ${end}`
 }
+
+/** "2026-10-15" → "10월 15일" */
+export function shortDate(key: string): string {
+  const d = parseKey(key)
+  return `${d.getMonth() + 1}월 ${d.getDate()}일`
+}

@@ -13,12 +13,26 @@ export const menuIds = Object.keys(menus) as MenuId[]
 export const menuOf = (id: MenuId): Menu => menus[id]
 export const ingredientOf = (id: IngredientId): Ingredient => ingredients[id]
 
+/** 도감을 보여줄 때의 묶음 (메뉴 고르기, 레시피 목록) */
+export const MENU_GROUPS: { label: string; match: (m: Menu) => boolean }[] = [
+  { label: '돼지', match: m => !m.special && m.protein === '돼지' },
+  { label: '닭', match: m => !m.special && m.protein === '닭' },
+  { label: '소', match: m => !m.special && m.protein === '소' },
+  { label: '생선', match: m => !m.special && m.protein === '생선' },
+  { label: '두부 · 계란', match: m => !m.special && m.protein === '두부·계란' },
+  { label: '채소 · 남은 재료', match: m => !m.special && (m.protein === '채소' || m.protein === '남은 재료') },
+  { label: '가끔 특식', match: m => !!m.special },
+]
+
 // recipes/ 폴더의 파일을 자동으로 모아요. 새 메뉴 파일을 넣기만 하면 목록에 따로 적을 필요가 없어요.
 const files = import.meta.glob<{ default: Recipe[] }>('./recipes/*.ts', { eager: true })
 export const recipes: Recipe[] = Object.values(files).flatMap(f => f.default)
 
 export const recipesOf = (menuId: MenuId) => recipes.filter(r => r.menuId === menuId)
 export const recipeById = (id: string) => recipes.find(r => r.id === id)
+
+/** 하트 · 메모를 붙이는 열쇠: 대표 레시피 → 첫 영상 → 메뉴 id 순 */
+export const recordKey = (menuId: MenuId): string => menuOf(menuId).mainRecipe ?? recipesOf(menuId)[0]?.id ?? menuId
 
 /** 타입 검사로 못 잡는 연결 문제를 찾아요. 문제 목록을 돌려줘요 (없으면 빈 배열) */
 export function checkData(): string[] {

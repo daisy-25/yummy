@@ -182,6 +182,12 @@ export function PlanScreen({ data, update, go }: ScreenProps) {
           <span>도시락 <b>{week.days.filter(d => d.cookExtra && d.menuId).length}번</b></span>
         </div>
       )}
+      {week.preps?.length ? (
+        <button className="prep-line" onClick={() => go('recipe')}>
+          <span>이번 주 밀프랩</span>
+          <b>{week.preps.map(p => menuOf(p).name).join(' · ')}</b>
+        </button>
+      ) : null}
       <p className="hint">자물쇠를 누른 날은 다시 추천받아도 그대로예요</p>
 
       {/* 아래에서 올라오는 판들 */}

@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Icon } from '../components/Icon.tsx'
 import type { IngredientId } from '../data/index.ts'
-import { addDays, dowIndex, mondayOf, weekId, weekLabel, weekRange } from '../lib/date.ts'
-import { buildList, shopMenus, type ShopLine } from '../lib/shopping.ts'
+import { addDays, mondayOf, weekId, weekLabel, weekRange } from '../lib/date.ts'
+import { buildList, shopMenus, shoppingMonday, type ShopLine } from '../lib/shopping.ts'
 import { emptyWeek } from '../lib/storage.ts'
 import { SECTIONS, type UserData } from '../types.ts'
 import type { ScreenProps } from './screen.ts'
@@ -15,8 +15,7 @@ export function ShopScreen({ data, update, go }: ScreenProps) {
   const thisMonday = mondayOf(today)
   const nextMonday = addDays(thisMonday, 7)
   // 주말에 다음 주 식단이 있으면 다음 주 장보기부터 보여줘요
-  const [which, setWhich] = useState<Which>(() =>
-    dowIndex(today) >= 5 && data.weeks[weekId(nextMonday)]?.days.some(d => d.menuId) ? 'next' : 'this')
+  const [which, setWhich] = useState<Which>(() => (shoppingMonday(data, today) > thisMonday ? 'next' : 'this'))
   const [showStaples, setShowStaples] = useState(false)
   const [draft, setDraft] = useState('')
 

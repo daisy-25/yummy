@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>레시피 탭 시안</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root { --paper: #f6f4ef; --ink: #1b1b1a; --mute: #8b877e; --line: #e4e0d6; --point: #ffd24c; --soft: #ebe8e0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #e9e6de; color: var(--ink); font-family: "Pretendard", -apple-system, "Malgun Gothic", sans-serif; -webkit-font-smoothing: antialiased; letter-spacing: -0.01em; padding: 32px 24px 48px; word-break: keep-all; }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; text-align: left; }
+  svg { display: block; flex: none; }
+  .ic { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+
+  .board { display: flex; gap: 28px; overflow-x: auto; padding-bottom: 12px; }
+  .col { flex: none; width: 390px; }
+  .label { font-size: 13px; font-weight: 700; margin: 0 0 10px 8px; }
+  .label span { font-weight: 400; color: var(--mute); margin-left: 6px; }
+  .phone { height: 844px; background: var(--paper); border-radius: 32px; overflow: hidden; box-shadow: 0 0 0 1px #d8d4c9; position: relative; }
+  .scroll { height: 100%; overflow-y: auto; scrollbar-width: none; padding-bottom: 100px; }
+  nav { position: absolute; bottom: 0; left: 0; right: 0; height: 84px; background: var(--paper); border-top: 1px solid var(--line); display: grid; grid-template-columns: repeat(4, 1fr); padding: 10px 8px 0; }
+  nav b { display: flex; flex-direction: column; align-items: center; gap: 5px; font-size: 11px; font-weight: 400; color: var(--mute); }
+  nav b .ic { width: 24px; height: 24px; }
+  nav b.on { color: var(--ink); font-weight: 700; }
+  nav b.on { --f: var(--point); }
+
+  /* 공통 */
+  .seg { display: inline-flex; padding: 3px; border-radius: 20px; background: var(--soft); }
+  .seg b { height: 32px; padding: 0 14px; border-radius: 16px; font-size: 13px; font-weight: 600; color: var(--mute); display: grid; place-items: center; }
+  .seg b.on { background: var(--paper); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+  .pad { padding: 0 20px; }
+  .h1 { font-size: 40px; line-height: 1.12; font-weight: 800; letter-spacing: -0.045em; }
+  .grp { font-size: 13px; font-weight: 700; color: var(--mute); padding: 28px 20px 4px; display: flex; justify-content: space-between; }
+  .grp i { font-style: normal; font-weight: 400; }
+  .chip { height: 32px; padding: 0 12px; border-radius: 16px; border: 1.5px solid var(--line); font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
+  .chip.on { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+  .switch { width: 44px; height: 26px; border-radius: 13px; background: var(--line); position: relative; flex: none; }
+  .switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.15); }
+  .switch.on { background: var(--ink); }
+  .switch.on::after { transform: translateX(18px); }
+
+  /* 목록 */
+  .top { display: flex; justify-content: space-between; align-items: center; padding: 18px 20px 0; }
+  .search { margin: 22px 20px 0; height: 46px; border-radius: 23px; background: var(--soft); display: flex; align-items: center; gap: 10px; padding: 0 16px; color: var(--mute); font-size: 15px; }
+  .row { display: flex; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--line); margin: 0 20px; }
+  .row .dw { width: 32px; font-size: 12px; color: var(--mute); }
+  .row .dw b { display: block; font-size: 16px; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .row .bd { flex: 1; min-width: 0; }
+  .row .nm { font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+  .row .tg { font-size: 12.5px; color: var(--mute); margin-top: 3px; }
+  .row .rt { color: var(--mute); font-size: 12px; display: flex; align-items: center; gap: 6px; }
+  .heart-s { width: 16px; height: 16px; }
+  .heart-s { --f: var(--point); }
+  .badge { font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 6px; background: var(--soft); color: var(--mute); }
+
+  /* 상세 */
+  .bar { display: flex; justify-content: space-between; align-items: center; padding: 12px 10px 0; }
+  .ib { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; }
+  .ib .ic { width: 22px; height: 22px; }
+  .ib.on { --f: var(--point); }
+  .meta { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 12px; font-size: 13px; color: var(--mute); }
+  .meta span { display: inline-flex; align-items: center; gap: 4px; }
+  .meta .ic { width: 15px; height: 15px; }
+  .memo { margin: 22px 20px 0; padding: 16px 18px; border-radius: 18px; background: var(--soft); }
+  .memo .lb { display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; color: var(--mute); }
+  .memo p { margin-top: 6px; font-size: 15px; line-height: 1.5; }
+  .memo p mark { background: linear-gradient(transparent 60%, var(--point) 60%); color: inherit; }
+  .toggle { display: flex; justify-content: space-between; align-items: center; margin: 14px 20px 0; padding: 14px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .toggle b { font-size: 15px; }
+  .toggle small { display: block; font-size: 12px; color: var(--mute); font-weight: 400; margin-top: 2px; }
+
+  .video { display: flex; gap: 12px; align-items: center; margin: 22px 20px 0; }
+  .thumb { width: 112px; height: 63px; border-radius: 10px; background: #ccc center/cover; flex: none; position: relative; }
+  .thumb::after { content: ""; position: absolute; inset: 0; margin: auto; width: 28px; height: 28px; border-radius: 50%; background: rgba(27,27,26,.7) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9.5 7.5v9l7-4.5z' fill='%23fff'/%3E%3C/svg%3E") center/18px no-repeat; }
+  .video .t { font-size: 14px; font-weight: 600; line-height: 1.35; }
+  .video .s { font-size: 12px; color: var(--mute); margin-top: 4px; }
+
+  .tools { display: flex; gap: 6px; flex-wrap: wrap; padding: 0 20px; }
+  .ing { display: flex; align-items: center; gap: 12px; margin: 0 20px; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+  .ing .box { width: 20px; height: 20px; border-radius: 6px; border: 1.5px solid var(--ink); flex: none; display: grid; place-items: center; }
+  .ing.done .box { background: var(--ink); color: var(--paper); }
+  .ing.done .n { color: var(--mute); text-decoration: line-through; }
+  .ing .n { flex: 1; font-weight: 600; }
+  .ing .a { color: var(--mute); font-size: 14px; }
+  .ing.seasoning .n { font-weight: 500; }
+
+  .step { display: flex; gap: 14px; margin: 0 20px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .step .no { width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--ink); font-size: 13px; font-weight: 700; display: grid; place-items: center; flex: none; margin-top: -2px; }
+  .step.cook .no { background: var(--ink); color: var(--paper); }
+  .step p { font-size: 15.5px; line-height: 1.55; }
+  .step p b { font-weight: 700; }
+  .step .acts { display: flex; gap: 6px; margin-top: 10px; }
+  .step .chip { height: 30px; font-size: 12.5px; }
+  .tip { margin: 16px 20px 0; font-size: 13.5px; color: var(--mute); line-height: 1.5; display: flex; gap: 8px; }
+
+  .other { display: flex; align-items: center; gap: 12px; margin: 0 20px; padding: 13px 0; border-bottom: 1px solid var(--line); }
+  .other .bd { flex: 1; min-width: 0; }
+  .other .c { font-size: 15px; font-weight: 600; display: flex; gap: 6px; align-items: center; }
+  .other .s { font-size: 12.5px; color: var(--mute); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .other .ic { color: var(--mute); width: 18px; height: 18px; }
+
+  /* 안 보고 해요 */
+  .fold { margin: 22px 20px 0; }
+  .fold dt { font-size: 12px; font-weight: 700; color: var(--mute); margin-top: 20px; }
+  .fold dt:first-child { margin-top: 0; }
+  .fold dd { font-size: 17px; font-weight: 600; line-height: 1.55; margin-top: 6px; }
+  .fold dd.ratio { font-size: 22px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.35; }
+  .fold dd .st { color: var(--mute); font-weight: 500; font-size: 14px; }
+  .open { margin: 26px 20px 0; height: 46px; border-radius: 23px; border: 1.5px solid var(--ink); display: flex; justify-content: center; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; width: calc(100% - 40px); }
+
+  /* 밀프랩 */
+  .note-line { padding: 10px 20px 0; font-size: 13px; color: var(--mute); line-height: 1.5; }
+  .prep { margin: 0 20px; padding: 15px 0; border-bottom: 1px solid var(--line); display: flex; gap: 12px; align-items: center; }
+  .prep .bd { flex: 1; min-width: 0; }
+  .prep .nm { font-size: 16px; font-weight: 600; }
+  .prep .how { font-size: 12.5px; color: var(--mute); margin-top: 4px; line-height: 1.45; }
+  .prep .how b { color: var(--ink); font-weight: 600; }
+
+  .notes { max-width: 1700px; margin-top: 28px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px 28px; font-size: 13.5px; line-height: 1.6; color: #55524b; }
+  .notes h3 { font-size: 14px; color: var(--ink); margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+  <symbol id="heart" viewBox="0 0 24 24"><path style="fill: var(--f, none)" d="M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.4 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10z"/></symbol>
+  <symbol id="clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="level" viewBox="0 0 24 24"><path d="M5 19v-4M12 19V10M19 19V5"/></symbol>
+  <symbol id="lunchbox" viewBox="0 0 24 24"><rect x="3.5" y="8" width="17" height="11" rx="2.5"/><path d="M3.5 12.5h17M8.5 8V6h7v2"/></symbol>
+  <symbol id="search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></symbol>
+  <symbol id="play" viewBox="0 0 24 24"><path d="M8 6v12l10-6z"/></symbol>
+  <symbol id="timer" viewBox="0 0 24 24"><circle cx="12" cy="13" r="7.5"/><path d="M12 9.5V13l2 1.5M10 3h4"/></symbol>
+  <symbol id="out" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+  <symbol id="check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="pencil" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></symbol>
+  <symbol id="down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="bulb" viewBox="0 0 24 24"><path d="M9 17h6M10 20.5h4M12 3.5a6 6 0 0 0-3.5 10.9V17h7v-2.6A6 6 0 0 0 12 3.5z"/></symbol>
+  <symbol id="snow" viewBox="0 0 24 24"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9M9.5 4.5 12 6l2.5-1.5M9.5 19.5 12 18l2.5 1.5"/></symbol>
+  <symbol id="t-cal" viewBox="0 0 24 24"><rect style="fill: var(--f, none)" x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+  <symbol id="t-book" viewBox="0 0 24 24"><path style="fill: var(--f, none)" d="M4 5.5C4 4.7 4.7 4 5.5 4H11v16H5.5c-.8 0-1.5-.7-1.5-1.5zM20 5.5c0-.8-.7-1.5-1.5-1.5H13v16h5.5c.8 0 1.5-.7 1.5-1.5z"/></symbol>
+  <symbol id="t-bag" viewBox="0 0 24 24"><path style="fill: var(--f, none)" d="M5 8h14l-1.2 11.1a1.5 1.5 0 0 1-1.5 1.4H7.7a1.5 1.5 0 0 1-1.5-1.4z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></symbol>
+</svg>
+
+<template id="nav">
+  <nav>
+    <b><svg class="ic"><use href="#t-cal"/></svg>식단</b>
+    <b class="on"><svg class="ic"><use href="#t-book"/></svg>레시피</b>
+    <b><svg class="ic"><use href="#t-bag"/></svg>장보기</b>
+    <b><svg class="ic"><use href="#heart"/></svg>찜</b>
+  </nav>
+</template>
+
+<div class="board">
+
+  <!-- ① 목록 -->
+  <div class="col">
+    <p class="label">① 레시피 탭 첫 화면 <span>이번 주 메뉴가 맨 위</span></p>
+    <div class="phone"><div class="scroll">
+      <div class="top"><div class="seg"><b class="on">저녁 메뉴</b><b>냉동 밀프랩</b></div></div>
+      <div class="search"><svg class="ic"><use href="#search"/></svg>메뉴 찾기</div>
+
+      <p class="grp">이번 주<i>10월 넷째 주</i></p>
+      <div class="row"><span class="dw"><b>19</b>월</span><span class="bd"><span class="nm">돼지 수육</span><span class="tg">영상 5개 · 60분</span></span></div>
+      <div class="row"><span class="dw"><b>20</b>화</span><span class="bd"><span class="nm">돼지고기 짜글이</span><span class="tg">영상 5개 · 30분</span></span></div>
+      <div class="row"><span class="dw"><b>21</b>수</span><span class="bd"><span class="nm">닭볶음탕 <svg class="ic heart-s"><use href="#heart"/></svg></span><span class="tg">영상 3개 · 40분 · 메모 1</span></span><span class="rt"><span class="badge">안 보고 해요</span></span></div>
+      <div class="row"><span class="dw"><b>22</b>목</span><span class="bd"><span class="nm">양배추 참치덮밥</span><span class="tg">영상 5개 · 10분</span></span></div>
+      <div class="row"><span class="dw"><b>23</b>금</span><span class="bd"><span class="nm">소고기덮밥(규동)</span><span class="tg">영상 5개 · 20분</span></span></div>
+
+      <p class="grp">전체 메뉴<i>29개</i></p>
+      <p class="grp" style="padding-top:8px">돼지</p>
+      <div class="row"><span class="bd"><span class="nm">제육볶음</span><span class="tg">볶음 · 25분 · 쉬움</span></span></div>
+      <div class="row"><span class="bd"><span class="nm">돼지고기 김치찌개</span><span class="tg">국물 · 25분 · 쉬움</span></span></div>
+      <div class="row"><span class="bd"><span class="nm">대패삼겹 콩나물불고기</span><span class="tg">볶음 · 20분 · 쉬움</span></span></div>
+    </div><div class="navhost"></div></div>
+  </div>
+
+  <!-- ② 상세 -->
+  <div class="col">
+    <p class="label">② 레시피 <span>대표 영상 1개를 글로</span></p>
+    <div class="phone"><div class="scroll">
+      <div class="bar">
+        <button class="ib"><svg class="ic"><use href="#back"/></svg></button>
+        <button class="ib on" aria-label="찜"><svg class="ic"><use href="#heart"/></svg></button>
+      </div>
+      <div class="pad">
+        <h1 class="h1">닭볶음탕</h1>
+        <div class="meta">
+          <span>2인 저녁 + 도시락</span>
+          <span><svg class="ic"><use href="#clock"/></svg>40분</span>
+          <span><svg class="ic"><use href="#level"/></svg>보통</span>
+        </div>
+      </div>
+
+      <div class="memo">
+        <div class="lb"><span>내 메모 · 10월 15일</span><span>+ 쓰기</span></div>
+        <p>고춧가루 1큰술 줄이니까 딱 좋았음. 감자는 3개 넣기</p>
+      </div>
+
+      <div class="toggle"><b>안 보고 해요<small>익숙해지면 켜요. 재료와 비율만 남아요</small></b><span class="switch"></span></div>
+
+      <div class="video">
+        <div class="thumb" style="background-image:url(https://i.ytimg.com/vi/pNtwZuhYQeg/mqdefault.jpg)"></div>
+        <div><p class="t">15분 만에 만드는 닭볶음탕 황금 레시피</p><p class="s">정호영의 오늘도 요리 · 조회수 369만 · 11:19</p></div>
+      </div>
+
+      <p class="grp">필요한 도구</p>
+      <div class="tools"><span class="chip">깊은 프라이팬 또는 냄비</span></div>
+
+      <p class="grp">재료<i>누르면 체크</i></p>
+      <div class="ing done"><span class="box"><svg class="ic" style="width:14px;height:14px"><use href="#check"/></svg></span><span class="n">닭볶음탕용 닭</span><span class="a">1마리(1.5kg)</span></div>
+      <div class="ing done"><span class="box"><svg class="ic" style="width:14px;height:14px"><use href="#check"/></svg></span><span class="n">감자</span><span class="a">2개</span></div>
+      <div class="ing"><span class="box"></span><span class="n">양파</span><span class="a">1/2개</span></div>
+      <div class="ing"><span class="box"></span><span class="n">대파</span><span class="a">1대</span></div>
+      <div class="ing seasoning"><span class="box"></span><span class="n">간장 6 · 설탕 4 · 맛술 3 · 고춧가루 4 · 굴소스 2 · 고추장 3</span><span class="a">큰술</span></div>
+
+      <p class="grp">준비<i>불 켜기 전에</i></p>
+      <div class="step"><span class="no">1</span><div><p>닭 1마리를 찬물에 씻어 핏물만 빼요 <span style="color:var(--mute)">(끓는 물에 데치지 않아요)</span></p></div></div>
+      <div class="step"><span class="no">2</span><div><p>감자 <b>2개</b>는 큼직하게, 양파 <b>1/2개</b>는 굵게, 대파 <b>1대</b>는 어슷하게 썰어요</p></div></div>
+
+      <p class="grp">조리<i>불 위에서</i></p>
+      <div class="step cook"><span class="no">3</span><div><p>팬에 식용유를 넉넉히 두르고 닭, 다진마늘 <b>1큰술</b>, 간장 <b>6큰술</b>을 넣고 색이 밸 때까지 볶아요</p>
+        <div class="acts"><span class="chip"><svg class="ic" style="width:14px;height:14px"><use href="#play"/></svg>이 부분 보기</span></div></div></div>
+      <div class="step cook"><span class="no">4</span><div><p>물 <b>300ml</b>와 설탕 4 · 맛술 3 · 고춧가루 4 · 굴소스 2 · 고추장 3큰술을 넣고 끓여요</p></div></div>
+      <div class="step cook"><span class="no">5</span><div><p>감자와 양파를 넣고 감자가 익을 때까지 끓여요</p></div></div>
+      <div class="step cook"><span class="no">6</span><div><p>대파와 후추를 넣고 중약불로 5분 더 끓이면 완성</p>
+        <div class="acts"><span class="chip"><svg class="ic" style="width:14px;height:14px"><use href="#timer"/></svg>5분 타이머</span><span class="chip"><svg class="ic" style="width:14px;height:14px"><use href="#play"/></svg>이 부분 보기</span></div></div></div>
+      <p class="tip"><svg class="ic" style="width:16px;height:16px"><use href="#bulb"/></svg>데치지 않아서 15분 만에 끝나요. 초보에게 가장 추천</p>
+
+      <p class="grp">다른 영상<i>조회수 순</i></p>
+      <div class="other"><span class="bd"><span class="c">백종원 PAIK JONG WON</span><span class="s">조회수 951만 · 18:44 · 한국 닭요리GOAT! 닭볶음탕</span></span><svg class="ic"><use href="#out"/></svg></div>
+      <div class="other"><span class="bd"><span class="c">1분요리 뚝딱이형 <span class="badge">쇼츠</span></span><span class="s">조회수 362만 · 1:00 · 강서구 배달 1등 닭볶음탕</span></span><svg class="ic"><use href="#out"/></svg></div>
+    </div><div class="navhost"></div></div>
+  </div>
+
+  <!-- ③ 안 보고 해요 -->
+  <div class="col">
+    <p class="label">③ "안 보고 해요"를 켰을 때 <span>장보기 · 비율 · 메모만</span></p>
+    <div class="phone"><div class="scroll">
+      <div class="bar">
+        <button class="ib"><svg class="ic"><use href="#back"/></svg></button>
+        <button class="ib on"><svg class="ic"><use href="#heart"/></svg></button>
+      </div>
+      <div class="pad">
+        <h1 class="h1">닭볶음탕</h1>
+        <div class="meta"><span>2인 저녁 + 도시락</span><span><svg class="ic"><use href="#clock"/></svg>40분</span><span><svg class="ic"><use href="#level"/></svg>보통</span></div>
+      </div>
+      <div class="toggle" style="margin-top:22px"><b>안 보고 해요<small>재료와 비율만 보여줘요</small></b><span class="switch on"></span></div>
+
+      <dl class="fold">
+        <dt>필요한 재료</dt>
+        <dd>닭 1마리 · 감자 2개 · 양파 1/2개 · 대파 1대<br><span class="st">집에 있는 것: 간장, 설탕, 맛술, 고춧가루, 굴소스, 고추장, 다진마늘</span></dd>
+        <dt>황금 비율</dt>
+        <dd class="ratio">간장 6 : 고춧가루 4 : 설탕 4 : 고추장 3 : 맛술 3 : 굴소스 2</dd>
+        <dt>내 메모</dt>
+        <dd>고춧가루 1큰술 줄이니까 딱 좋았음. 감자는 3개 넣기</dd>
+      </dl>
+      <button class="open"><svg class="ic" style="width:18px;height:18px"><use href="#down"/></svg>전체 레시피 펼치기</button>
+    </div><div class="navhost"></div></div>
+  </div>
+
+  <!-- ④ 밀프랩 -->
+  <div class="col">
+    <p class="label">④ 냉동 밀프랩 <span>"이번 주 만들기" → 장보기에 재료</span></p>
+    <div class="phone"><div class="scroll">
+      <div class="top"><div class="seg"><b>저녁 메뉴</b><b class="on">냉동 밀프랩</b></div></div>
+      <div class="pad" style="margin-top:26px"><h1 class="h1">얼려두고<br>꺼내 먹기</h1></div>
+      <p class="note-line">주말에 한 번 만들어 두면 바쁜 날 저녁이나 도시락이 돼요. 냉동은 한 달 안에 먹어요.</p>
+
+      <p class="grp">밀프랩 전용</p>
+      <div class="prep"><div class="bd"><p class="nm">스팸마요 주먹밥</p><p class="how"><b>완성해서</b> 8개쯤 · 랩째로 전자레인지 1분 30초~2분</p></div><span class="chip on"><svg class="ic" style="width:14px;height:14px"><use href="#check"/></svg>이번 주</span></div>
+      <div class="prep"><div class="bd"><p class="nm">소불고기 브리또</p><p class="how"><b>완성해서</b> 6~8개 · 전자레인지 2~3분, 팬에 구우면 바삭</p></div><span class="chip"><svg class="ic" style="width:14px;height:14px"><use href="#plus"/></svg>이번 주</span></div>
+      <div class="prep"><div class="bd"><p class="nm">떡갈비</p><p class="how"><b>양념해서</b> 10개쯤 · 녹이지 않고 약불에 뚜껑 덮어 굽기</p></div><span class="chip"><svg class="ic" style="width:14px;height:14px"><use href="#plus"/></svg>이번 주</span></div>
+
+      <p class="grp">저녁 메뉴 중 얼려도 되는 것</p>
+      <div class="prep"><div class="bd"><p class="nm">제육볶음</p><p class="how"><b>양념해서</b> 2인분씩 2팩 · 반쯤 녹여서 팬에 볶기</p></div><span class="chip"><svg class="ic" style="width:14px;height:14px"><use href="#plus"/></svg>이번 주</span></div>
+      <div class="prep"><div class="bd"><p class="nm">카레라이스</p><p class="how"><b>완성해서</b> 1인분씩 4팩 · 전자레인지 3~4분</p></div><span class="chip"><svg class="ic" style="width:14px;height:14px"><use href="#plus"/></svg>이번 주</span></div>
+      <div class="prep"><div class="bd"><p class="nm">소고기무국</p><p class="how"><b>완성해서</b> 2인분씩 2팩 · 냄비에 그대로 끓이기</p></div><span class="chip"><svg class="ic" style="width:14px;height:14px"><use href="#plus"/></svg>이번 주</span></div>
+
+      <p class="grp">한 번에 여러 개 만드는 영상</p>
+      <div class="other"><span class="bd"><span class="c">따뜻한 여사</span><span class="s">조회수 138만 · 10:06 · 3개월이 편한 냉동도시락</span></span><svg class="ic"><use href="#out"/></svg></div>
+      <div class="other"><span class="bd"><span class="c">자요뱅</span><span class="s">조회수 72만 · 4:16 · 순대국 밀프랩</span></span><svg class="ic"><use href="#out"/></svg></div>
+    </div><div class="navhost"></div></div>
+  </div>
+</div>
+
+<div class="notes">
+  <div><h3>① 첫 화면</h3>이번 주 메뉴가 요일 순으로 맨 위, 그 아래 전체 도감. 하트 누른 메뉴는 이름 옆에 작은 하트, "안 보고 해요"를 켠 메뉴는 표시가 붙어요.</div>
+  <div><h3>② 레시피</h3>썸네일은 대표 영상 하나만. 재료는 장보듯 체크하고, 단계는 [준비]=빈 원 / [조리]=검은 원으로 구분. 분량은 굵게. "이 부분 보기"는 그 장면부터 유튜브가 열려요.</div>
+  <div><h3>③ 안 보고 해요</h3>익숙한 메뉴는 이 상태로 기억돼요. 노란색은 화면당 한 곳만: 하트(찜)에만 써요.</div>
+  <div><h3>④ 밀프랩</h3>"+ 이번 주"를 누르면 장보기 목록에 재료가 들어가요. 메뉴를 누르면 ②와 같은 레시피 화면으로.</div>
+</div>
+
+<script>
+  // 탭 바를 각 폰에 붙여요
+  const nav = document.getElementById('nav')
+  document.querySelectorAll('.navhost').forEach(h => h.replaceWith(nav.content.cloneNode(true)))
+</script>
+</body>
+</html>

@@ -83,4 +83,24 @@ export default [
     ],
     warning: '자동 자막 기준이라 "우유", "설탕 3"은 영상으로 한 번 확인해 주세요',
   },
+  {
+    id: 'dakbokkeumtang-paik-malbok',
+    menuId: 'dakbokkeumtang',
+    video: {
+      youtubeId: '-EwR5eshbPE',
+      title: "'말복'에는 얼큰한 '닭볶음탕'으로 원기회복하세요! | 백종원의 백종원 레시피",
+      channel: '백종원 PAIK JONG WON',
+      views: 3373147, seconds: 466, isShort: false, checkedAt: '2026-10-22',
+    },
+  },
+  {
+    id: 'dakbokkeumtang-simbanggol',
+    menuId: 'dakbokkeumtang',
+    video: {
+      youtubeId: '1AYtWZ2Ut1g',
+      title: '닭볶음탕 황금레시피 2020년 버전 리뉴얼',
+      channel: '심방골주부',
+      views: 2653406, seconds: 462, isShort: false, checkedAt: '2026-10-22',
+    },
+  },
 ] satisfies Recipe[]

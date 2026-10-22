@@ -1,6 +1,14 @@
 // 장보기 목록 만들기 (SPEC 3-3). 목록은 저장하지 않고 언제나 "식단 + 메뉴 재료 + 재료 사전"으로 새로 계산해요.
 import { ingredientOf, menuOf, type IngredientId, type MenuId } from '../data/index.ts'
-import { SECTIONS, type Section, type WeekPlan } from '../types.ts'
+import { SECTIONS, type Section, type UserData, type WeekPlan } from '../types.ts'
+import { addDays, dowIndex, mondayOf, weekId } from './date.ts'
+
+/** 지금 장보기할 주: 주말에 다음 주 식단이 있으면 다음 주, 아니면 이번 주 */
+export function shoppingMonday(data: UserData, today: Date): Date {
+  const thisMonday = mondayOf(today)
+  const nextMonday = addDays(thisMonday, 7)
+  return dowIndex(today) >= 5 && data.weeks[weekId(nextMonday)]?.days.some(d => d.menuId) ? nextMonday : thisMonday
+}
 
 /** 장보기 한 줄 (같은 재료는 한 줄로 합쳐요) */
 export type ShopLine = {

@@ -2,9 +2,9 @@
 import { useState } from 'react'
 import { Icon } from '../../components/Icon.tsx'
 import { Sheet, SheetRow, Switch } from '../../components/Sheet.tsx'
-import { ingredientOf, menuIds, menuOf, type MenuId } from '../../data/index.ts'
+import { ingredientOf, MENU_GROUPS, menuIds, menuOf, type MenuId } from '../../data/index.ts'
 import { DOW, parseKey, weekLabel, weekRange } from '../../lib/date.ts'
-import type { DayPlan, Protein, WeekPlan } from '../../types.ts'
+import type { DayPlan, WeekPlan } from '../../types.ts'
 
 /** 하루 더보기: 다시 뽑기, 직접 고르기, 메모, 도시락, 해먹었어요, 고정 */
 export function DaySheet(p: {
@@ -45,16 +45,6 @@ export function DaySheet(p: {
   )
 }
 
-const GROUPS: { label: string; match: (p: Protein, special?: boolean) => boolean }[] = [
-  { label: '돼지', match: (p, s) => !s && p === '돼지' },
-  { label: '닭', match: (p, s) => !s && p === '닭' },
-  { label: '소', match: (p, s) => !s && p === '소' },
-  { label: '생선', match: (p, s) => !s && p === '생선' },
-  { label: '두부 · 계란', match: (p, s) => !s && p === '두부·계란' },
-  { label: '채소 · 남은 재료', match: (p, s) => !s && (p === '채소' || p === '남은 재료') },
-  { label: '가끔 특식', match: (_, s) => !!s },
-]
-
 /** 메뉴 도감에서 고르기 */
 export function MenuPicker({ title, current, week, onPick, onClose }: {
   title: string
@@ -67,8 +57,8 @@ export function MenuPicker({ title, current, week, onPick, onClose }: {
   const dinner = menuIds.filter(id => !menuOf(id).prepOnly)
   return (
     <Sheet title={title} onClose={onClose}>
-      {GROUPS.map(g => {
-        const ids = dinner.filter(id => g.match(menuOf(id).protein, menuOf(id).special))
+      {MENU_GROUPS.map(g => {
+        const ids = dinner.filter(id => g.match(menuOf(id)))
         return (
           <div key={g.label}>
             <div className="group">{g.label}</div>

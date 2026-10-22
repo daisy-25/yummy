@@ -22,6 +22,15 @@ const paths = {
   pencil: <><path d="M4 20h4L19 9l-4-4L4 16z" /><path d="M13.5 6.5l4 4" /></>,
   note: <><path d="M5 4.5h14v10l-5 5H5z" /><path d="M14 19.5v-5h5M8.5 9h7M8.5 12.5h4" /></>,
   trash: <><path d="M4.5 7h15M9.5 7V4.5h5V7M6.5 7l1 12.5h9l1-12.5" /></>,
+  back: <path d="M15 5l-7 7 7 7" />,
+  down: <path d="M6 9l6 6 6-6" />,
+  search: <><circle cx="11" cy="11" r="6.5" /><path d="M16 16l4 4" /></>,
+  play: <path d="M8 6v12l10-6z" />,
+  pause: <path d="M9 6v12M15 6v12" />,
+  timer: <><circle cx="12" cy="13" r="7.5" /><path d="M12 9.5V13l2 1.5M10 3h4" /></>,
+  external: <path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" />,
+  bulb: <path d="M9 17h6M10 20.5h4M12 3.5a6 6 0 0 0-3.5 10.9V17h7v-2.6A6 6 0 0 0 12 3.5z" />,
+  alert: <><path d="M12 4 2.8 19.5h18.4z" /><path d="M12 10v4.5M12 17.2v.1" /></>,
 } satisfies Record<string, ReactNode>
 
 export type IconName = keyof typeof paths

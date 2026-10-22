@@ -6,6 +6,7 @@ export const menus = {
   /* ───── 돼지 ───── */
   jeyuk: {
     name: '제육볶음', protein: '돼지', method: '볶음', level: '쉬움', minutes: 25, lunchbox: true,
+    mainRecipe: 'jeyuk-biryong',
     sides: '양배추 쌈',
     keyRatio: '고추장 3 : 간장 2 : 고춧가루 1 : 설탕 1 : 다진마늘 1',
     freeze: { how: '양념해서', packs: '2인분씩 2팩', reheat: '반쯤 녹여서 팬에 볶기' },
@@ -18,6 +19,7 @@ export const menus = {
   },
   'pork-kimchi-jjigae': {
     name: '돼지고기 김치찌개', protein: '돼지', method: '국물', level: '쉬움', minutes: 25, lunchbox: false,
+    mainRecipe: 'pork-kimchi-jjigae-paik',
     sides: '계란후라이',
     keyRatio: '김치 2컵 : 물 3컵, 고춧가루 1 · 다진마늘 0.5',
     ingredients: [
@@ -28,6 +30,7 @@ export const menus = {
   },
   'daepae-kongnamul': {
     name: '대패삼겹 콩나물불고기', protein: '돼지', method: '볶음', level: '쉬움', minutes: 20, lunchbox: true,
+    mainRecipe: 'daepae-kongnamul-paik',
     sides: '김치',
     keyRatio: '고추장 2 : 고춧가루 2 : 간장 2 : 설탕 1 : 다진마늘 1',
     ingredients: [
@@ -39,6 +42,7 @@ export const menus = {
   },
   'daepae-cabbage-don': {
     name: '대패삼겹 양배추덮밥', protein: '돼지', method: '덮밥·면', level: '쉬움', minutes: 15, lunchbox: true,
+    mainRecipe: 'daepae-cabbage-don-jachi',
     keyRatio: '간장 3 : 설탕 1 : 굴소스 1 : 다진마늘 1',
     ingredients: [
       { id: 'pork-belly-thin', amount: '300g' }, { id: 'cabbage', amount: '1/4통' }, { id: 'green-onion', amount: '1/2대' },
@@ -90,6 +94,7 @@ export const menus = {
   },
   curry: {
     name: '카레라이스', protein: '돼지', method: '덮밥·면', level: '쉬움', minutes: 30, lunchbox: true,
+    mainRecipe: 'curry-paik-moksal',
     sides: '김치',
     keyRatio: '물 600ml에 카레가루 1봉(100g)',
     freeze: { how: '완성해서', packs: '1인분씩 4팩', reheat: '전자레인지 3~4분, 중간에 한 번 저어요' },
@@ -114,6 +119,7 @@ export const menus = {
   },
   jjimdak: {
     name: '찜닭', protein: '닭', method: '조림·찜', level: '보통', minutes: 40, lunchbox: true,
+    mainRecipe: 'jjimdak-bapchanam',
     keyRatio: '간장 8 : 설탕 4 : 맛술 2 : 다진마늘 2',
     ingredients: [
       { id: 'whole-chicken', amount: '1마리' }, { id: 'potato', amount: '2개' }, { id: 'carrot', amount: '1/2개' },
@@ -125,6 +131,7 @@ export const menus = {
   },
   dakgalbi: {
     name: '닭갈비', protein: '닭', method: '볶음', level: '보통', minutes: 30, lunchbox: true,
+    mainRecipe: 'dakgalbi-haruhanki',
     keyRatio: '고추장 3 : 고춧가루 2 : 간장 2 : 설탕 1 : 다진마늘 1',
     freeze: { how: '양념해서', packs: '2인분씩 2팩', reheat: '반쯤 녹여서 채소와 함께 볶기' },
     ingredients: [
@@ -136,6 +143,7 @@ export const menus = {
   },
   'teriyaki-don': {
     name: '데리야끼 치킨덮밥', protein: '닭', method: '덮밥·면', level: '쉬움', minutes: 25, lunchbox: true,
+    mainRecipe: 'teriyaki-don-jung',
     keyRatio: '간장 4 : 설탕 2 : 맛술 2 : 다진마늘 0.5',
     ingredients: [
       { id: 'chicken-thigh', amount: '400g' }, { id: 'onion', amount: '1/2개' }, { id: 'green-onion', amount: '1/2대' },
@@ -148,6 +156,7 @@ export const menus = {
   /* ───── 소 ───── */
   bulgogi: {
     name: '소불고기', protein: '소', method: '볶음', level: '쉬움', minutes: 25, lunchbox: true,
+    mainRecipe: 'bulgogi-paik',
     keyRatio: '간장 5 : 설탕 2 : 다진마늘 1 : 참기름 1, 후추 조금',
     freeze: { how: '양념해서', packs: '2인분씩 2팩', reheat: '반쯤 녹여서 팬에 볶기' },
     ingredients: [
@@ -159,6 +168,7 @@ export const menus = {
   },
   'beef-radish-soup': {
     name: '소고기무국', protein: '소', method: '국물', level: '쉬움', minutes: 30, lunchbox: false,
+    mainRecipe: 'beef-radish-soup-paik',
     keyRatio: '참기름에 고기·무 볶고 물 1L, 국간장 2 · 다진마늘 0.5, 소금으로 간',
     freeze: { how: '완성해서', packs: '2인분씩 2팩', reheat: '냄비에 그대로 넣고 끓이기' },
     ingredients: [
@@ -169,6 +179,7 @@ export const menus = {
   },
   gyudon: {
     name: '소고기덮밥(규동)', protein: '소', method: '덮밥·면', level: '쉬움', minutes: 20, lunchbox: true,
+    mainRecipe: 'gyudon-jung',
     keyRatio: '물 100ml : 간장 4 : 설탕 2 : 맛술 2',
     ingredients: [
       { id: 'beef-bulgogi', amount: '300g' }, { id: 'onion', amount: '1개' }, { id: 'green-onion', amount: '1/2대' },
@@ -180,6 +191,7 @@ export const menus = {
   /* ───── 생선 ───── */
   'mackerel-gui': {
     name: '고등어구이', protein: '생선', method: '구이', level: '쉬움', minutes: 15, lunchbox: false,
+    mainRecipe: 'mackerel-gui-yangjanggeum',
     sides: '계란말이',
     ingredients: [
       { id: 'mackerel', amount: '2마리' }, { id: 'egg', amount: '4개' }, { id: 'green-onion', amount: '1/4대' },
@@ -188,6 +200,7 @@ export const menus = {
   },
   'mackerel-jorim': {
     name: '고등어 김치조림', protein: '생선', method: '조림·찜', level: '보통', minutes: 35, lunchbox: false,
+    mainRecipe: 'mackerel-jorim-paik',
     keyRatio: '고춧가루 2 : 간장 2 : 다진마늘 1 : 설탕 0.5, 물 1.5컵',
     ingredients: [
       { id: 'mackerel', amount: '1마리' }, { id: 'kimchi', amount: '1/4포기' }, { id: 'radish', amount: '1/4개', optional: true },
@@ -212,6 +225,7 @@ export const menus = {
   /* ───── 두부·계란 ───── */
   'doenjang-jjigae': {
     name: '된장찌개', protein: '두부·계란', method: '국물', level: '보통', minutes: 25, lunchbox: false,
+    mainRecipe: 'doenjang-jjigae-paik-beef',
     sides: '계란말이',
     keyRatio: '물 3컵에 된장 2, 고춧가루 0.5 · 다진마늘 0.5',
     memo: '바지락 대신 돼지고기로 (선택)',
@@ -224,6 +238,7 @@ export const menus = {
   },
   sundubu: {
     name: '순두부찌개', protein: '두부·계란', method: '국물', level: '쉬움', minutes: 20, lunchbox: false,
+    mainRecipe: 'sundubu-paik',
     keyRatio: '기름 2에 고춧가루 2로 고추기름, 간장 1 · 다진마늘 1',
     memo: '바지락 대신 다진 돼지고기',
     ingredients: [
@@ -235,6 +250,7 @@ export const menus = {
   },
   'dubu-jorim': {
     name: '두부조림', protein: '두부·계란', method: '조림·찜', level: '쉬움', minutes: 20, lunchbox: true,
+    mainRecipe: 'dubu-jorim-harukki',
     keyRatio: '간장 3 : 물 5 : 고춧가루 1 : 설탕 0.5 : 다진마늘 0.5',
     ingredients: [
       { id: 'tofu', amount: '1모' }, { id: 'green-onion', amount: '1/2대' },
@@ -244,6 +260,7 @@ export const menus = {
   },
   'dubu-kimchi': {
     name: '두부김치', protein: '두부·계란', method: '볶음', level: '쉬움', minutes: 20, lunchbox: false,
+    mainRecipe: 'dubu-kimchi-paik',
     keyRatio: '김치 볶을 때 고춧가루 1 : 설탕 0.5 : 다진마늘 0.5, 마지막에 참기름',
     ingredients: [
       { id: 'tofu', amount: '1모' }, { id: 'kimchi', amount: '1/4포기' }, { id: 'pork-front', amount: '200g' },
@@ -256,6 +273,7 @@ export const menus = {
   /* ───── 채소 · 남은 재료 ───── */
   bibimbap: {
     name: '비빔밥', protein: '채소', method: '덮밥·면', level: '보통', minutes: 30, lunchbox: false,
+    mainRecipe: 'bibimbap-paik-microwave',
     keyRatio: '비빔장: 고추장 3 : 참기름 1 : 설탕 0.5',
     ingredients: [
       { id: 'bean-sprout', amount: '1봉' }, { id: 'spinach', amount: '1단' }, { id: 'zucchini', amount: '1/2개' },
@@ -266,6 +284,7 @@ export const menus = {
   },
   'fridge-fried-rice': {
     name: '냉장고 털이 볶음밥', protein: '남은 재료', method: '볶음', level: '쉬움', minutes: 15, lunchbox: true,
+    mainRecipe: 'fridge-fried-rice-paik',
     sides: '김치',
     keyRatio: '밥 2공기에 간장 1 : 굴소스 0.5, 파기름 먼저',
     memo: '이번 주에 남은 채소·고기를 모두 넣어요',
@@ -278,6 +297,7 @@ export const menus = {
   /* ───── 가끔 특식 ───── */
   'tomato-pasta': {
     name: '베이컨 토마토 파스타', protein: '돼지', method: '양식', special: true, level: '쉬움', minutes: 25, lunchbox: true,
+    mainRecipe: 'tomato-pasta-sosohwang',
     keyRatio: '면 200g에 소스 1/2병, 면수 반 컵',
     ingredients: [
       { id: 'pasta', amount: '200g' }, { id: 'tomato-sauce', amount: '1/2병' }, { id: 'bacon', amount: '100g' },
@@ -287,6 +307,7 @@ export const menus = {
   },
   'cream-pasta': {
     name: '치킨 크림 파스타', protein: '닭', method: '양식', special: true, level: '쉬움', minutes: 25, lunchbox: false,
+    mainRecipe: 'cream-pasta-dday-chicken',
     keyRatio: '면 200g에 생크림 250ml, 소금 · 후추로 간',
     ingredients: [
       { id: 'pasta', amount: '200g' }, { id: 'chicken-thigh', amount: '200g' }, { id: 'heavy-cream', amount: '1팩' },

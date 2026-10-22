@@ -5,6 +5,7 @@
   --mute: #8b877e;
   --line: #e4e0d6;
   --point: #ffd24c;
+  --soft: #ebe8e0;
   --nav-h: 84px;
 }
 
@@ -15,6 +16,7 @@ body {
   font-family: "Pretendard", -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   -webkit-font-smoothing: antialiased;
   letter-spacing: -0.01em;
+  word-break: keep-all; /* 한글 단어 중간에서 줄이 안 바뀌게 */
   display: flex;
   justify-content: center;
   min-height: 100vh;
@@ -42,7 +44,31 @@ svg { display: block; }
 .btn.round { width: 46px; padding: 0; flex: none; }
 .btn.wide { width: 100%; margin-top: 18px; }
 .btn:disabled { opacity: .35; cursor: default; }
-.chip { height: 32px; padding: 0 14px; border-radius: 16px; border: 1.5px solid var(--line); font-size: 13px; font-weight: 600; }
+.chip { height: 32px; padding: 0 14px; border-radius: 16px; border: 1.5px solid var(--line); display: inline-flex; align-items: center; justify-content: center; gap: 4px; font-size: 13px; font-weight: 600; line-height: 1; white-space: nowrap; color: inherit; text-decoration: none; }
+
+.chip.on { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.badge { flex: none; padding: 2px 6px; border-radius: 6px; background: var(--soft); font-size: 11px; font-weight: 700; color: var(--mute); }
+.ib { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 50%; }
+.pad { padding: 0 20px; }
+.h1 { font-size: 40px; line-height: 1.12; font-weight: 800; letter-spacing: -0.045em; word-break: keep-all; }
+
+/* 두 갈래 전환 (이번 주/다음 주, 저녁/밀프랩) */
+.seg { display: inline-flex; padding: 3px; border-radius: 20px; background: var(--soft); }
+.seg button { height: 32px; padding: 0 14px; border-radius: 16px; font-size: 13px; font-weight: 600; color: var(--mute); }
+.seg button.on { background: var(--paper); color: var(--ink); box-shadow: 0 1px 2px rgba(0, 0, 0, .08); }
+
+/* 유튜브로 나가는 영상 한 줄 */
+.video-row { display: flex; align-items: center; gap: 12px; margin: 0 20px; padding: 13px 0; border-bottom: 1px solid var(--line); color: inherit; text-decoration: none; }
+.video-row .bd { flex: 1; min-width: 0; }
+.video-row .c { display: flex; align-items: center; gap: 6px; font-size: 15px; font-weight: 600; }
+.video-row .s { display: block; margin-top: 3px; font-size: 12.5px; color: var(--mute); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.video-row > .ic { color: var(--mute); }
+
+/* 잠깐 떴다 사라지는 알림 (탭 바 바로 위) */
+.toast { position: fixed; left: 0; right: 0; bottom: calc(var(--nav-h) + 12px); max-width: 376px; margin: 0 auto; z-index: 15; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 16px; background: var(--ink); color: var(--paper); font-size: 14px; animation: toast-in .2s ease-out; }
+.toast button { flex: none; color: var(--point); font-weight: 700; }
+@media (min-width: 500px) { .toast { position: absolute; left: 12px; right: 12px; } }
+@keyframes toast-in { from { transform: translateY(10px); opacity: 0; } }
 
 /* 입력 */
 .text-input { width: 100%; height: 52px; margin-top: 14px; padding: 0 16px; border: 1.5px solid var(--line); border-radius: 14px; background: #fff; font: inherit; font-size: 16px; color: var(--ink); }
