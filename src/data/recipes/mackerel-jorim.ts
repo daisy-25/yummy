@@ -13,7 +13,7 @@ export default [
     servings: '고등어 통조림 1캔 분량 (2인)',
     tools: ['냄비', '양념 섞을 볼'],
     ingredients: [
-      { name: '고등어 통조림', amount: '1캔(400g)' }, { id: 'kimchi', amount: '1/4포기(400g, 신김치)' },
+      { id: 'canned-mackerel', amount: '1캔(400g)' }, { id: 'kimchi', amount: '1/4포기(400g, 신김치)' },
       { id: 'onion', amount: '1/2개' }, { id: 'cheongyang', amount: '3개' }, { id: 'green-onion', amount: '2/3컵(50g)' },
       { name: '물', amount: '2컵(400ml)' },
       { id: 'chili-flakes', amount: '굵은 것 4큰술 + 고운 것 2큰술' }, { id: 'garlic-minced', amount: '2큰술' },

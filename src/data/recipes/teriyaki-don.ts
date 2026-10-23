@@ -15,8 +15,8 @@ export default [
     ingredients: [
       { id: 'chicken-thigh', amount: '2조각' }, { id: 'egg', amount: '2개' }, { id: 'cabbage', amount: '한 주먹 (채 썰어서)' },
       { id: 'rice', amount: '2공기' }, { id: 'salt', amount: '한 꼬집씩' }, { id: 'pepper', amount: '한 꼬집 + 마무리 조금' },
-      { name: '버터', amount: '2조각 (달걀용 1 + 조림용 1)' }, { id: 'oil', amount: '조금' },
-      { name: '청주', amount: '3큰술' }, { id: 'mirin', amount: '3큰술' }, { id: 'soy', amount: '3큰술' }, { id: 'sugar', amount: '2큰술' },
+      { id: 'butter', amount: '2조각 (달걀용 1 + 조림용 1)' }, { id: 'oil', amount: '조금' },
+      { id: 'cheongju', amount: '3큰술' }, { id: 'mirin', amount: '3큰술' }, { id: 'soy', amount: '3큰술' }, { id: 'sugar', amount: '2큰술' },
     ],
     steps: [
       { phase: '준비', text: '닭다리살 2조각 앞뒤로 소금·후추를 한 꼬집씩 뿌려 밑간해요' },

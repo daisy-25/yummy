@@ -15,7 +15,7 @@ export default [
     ingredients: [
       { id: 'whole-chicken', amount: '1마리 (1kg)' }, { id: 'potato', amount: '2개' }, { id: 'carrot', amount: '1/2개' },
       { id: 'onion', amount: '1개' }, { id: 'green-onion', amount: '1대' }, { id: 'dangmyeon', amount: '넓적당면 한 줌' },
-      { name: '베트남 건고추', amount: '10개 (매운 정도에 맞게)' },
+      { id: 'dried-chili', amount: '10개 (매운 정도에 맞게)' },
       { id: 'garlic-minced', amount: '2스푼' }, { name: '다진 생강', amount: '1스푼 (없어도 돼요)' },
       { id: 'soy', amount: '5스푼' }, { id: 'sugar', amount: '3~4스푼' }, { id: 'sesame-oil', amount: '1스푼' },
       { name: '노추 (노두유)', amount: '1스푼 (없으면 춘장)' }, { id: 'oyster-sauce', amount: '1스푼' },

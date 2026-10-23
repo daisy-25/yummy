@@ -32,5 +32,5 @@ export default [
   { id: 'cabbage-tuna-don-duri', menuId: 'cabbage-tuna-don', video: v('89FXsp6br_o', '양배추 참치 덮밥｜건강한 다이어트 요리', '두리식탁', 115553, 131) },
   { id: 'cabbage-tuna-don-cepp', menuId: 'cabbage-tuna-don', video: v('IRHzcU5zeYA', '냉장고 속 양배추 이렇게 드세요 :: 양배추 참치덮밥', '쿡잇파파 C.E.P.P', 16334, 189) },
   { id: 'cabbage-tuna-don-dietcook', menuId: 'cabbage-tuna-don', video: v('ZdzKZ1YTaM8', '규현 양배추참치덮밥 초간단 5분 레시피', '다잇쿡', 11359, 127) },
-  { id: 'cabbage-tuna-don-kkuda', menuId: 'cabbage-tuna-don', video: v('l8BqIFmdO40', '양배추참치덮밥 전자레인지 버전', '꾸다', 8860, 33, true) },
+  { id: 'cabbage-tuna-don-kkuda', menuId: 'cabbage-tuna-don', video: v('l8BqIFmdO40', '양배추참치덮밥 전자레인지 버전', '꾸다', 8860, 33) },
 ] satisfies Recipe[]

@@ -17,7 +17,7 @@ export default [
       { id: 'pork-belly-thin', amount: '250g' }, { id: 'cabbage', amount: '250g' }, { id: 'green-onion', amount: '적당히' },
       { id: 'cheongyang', amount: '적당히 (선택)' },
       { id: 'garlic-minced', amount: '1스푼' }, { id: 'chili-flakes', amount: '1스푼' }, { id: 'doenjang', amount: '1/2스푼' },
-      { id: 'oyster-sauce', amount: '1스푼' }, { id: 'sugar', amount: '1스푼' }, { name: '통깨', amount: '조금' },
+      { id: 'oyster-sauce', amount: '1스푼' }, { id: 'sugar', amount: '1스푼' }, { id: 'sesame-seed', amount: '조금' },
     ],
     steps: [
       { phase: '준비', text: '양배추 250g을 한입 크기로 썰고, 대파는 송송 썰어요' },

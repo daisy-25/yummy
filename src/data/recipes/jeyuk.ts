@@ -15,10 +15,10 @@ export default [
     ingredients: [
       { id: 'pork-front', amount: '600g (얇게 썬 것)' }, { id: 'onion', amount: '2개', check: true },
       { id: 'garlic-whole', amount: '10톨' },
-      { id: 'oil', amount: '3큰술' }, { id: 'mirin', amount: '2큰술' }, { name: '매실청', amount: '1큰술' },
+      { id: 'oil', amount: '3큰술' }, { id: 'mirin', amount: '2큰술' }, { id: 'maesil', amount: '1큰술' },
       { id: 'pepper', amount: '1큰술' }, { id: 'sugar', amount: '1큰술' }, { id: 'soy', amount: '2큰술 (양조간장)' },
       { id: 'chili-flakes', amount: '4큰술 (굵은 것)' }, { id: 'gochujang', amount: '5큰술', check: true },
-      { name: '물엿', amount: '2큰술' }, { name: '통깨', amount: '조금' },
+      { id: 'mulyeot', amount: '2큰술' }, { id: 'sesame-seed', amount: '조금' },
     ],
     steps: [
       { phase: '준비', text: '통마늘 10톨을 칼로 다져요 (사 온 다진마늘은 물이 생겨서 영상은 통마늘을 써요)' },

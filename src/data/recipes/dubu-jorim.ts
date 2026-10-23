@@ -17,7 +17,7 @@ export default [
       { id: 'oil', amount: '조금' },
       { name: '물', amount: '6큰술', check: true }, { id: 'soy', amount: '2큰술', check: true }, { id: 'chili-flakes', amount: '1큰술', check: true },
       { id: 'sesame-oil', amount: '1큰술', check: true }, { id: 'sugar', amount: '0.5큰술', check: true }, { id: 'garlic-minced', amount: '0.5큰술', check: true },
-      { name: '통깨', amount: '조금 (선택)' },
+      { id: 'sesame-seed', amount: '조금 (선택)' },
     ],
     steps: [
       { phase: '준비', text: '두부 1모(300g)는 키친타월로 물기를 닦고 도톰하게 썰어요' },

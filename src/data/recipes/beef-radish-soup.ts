@@ -15,7 +15,7 @@ export default [
     ingredients: [
       { id: 'radish', amount: '1과 1/2컵 (230g)' }, { id: 'beef-soup', amount: '1컵 (150g, 양지)' }, { id: 'onion', amount: '1/4개 (50g)' },
       { id: 'green-onion', amount: '1/3컵 (30g)' }, { id: 'sesame-oil', amount: '1큰술' }, { id: 'oil', amount: '1큰술' },
-      { id: 'garlic-minced', amount: '1큰술' }, { id: 'soy-soup', amount: '2큰술' }, { name: '멸치액젓', amount: '2큰술 (없으면 빼도 돼요)' },
+      { id: 'garlic-minced', amount: '1큰술' }, { id: 'soy-soup', amount: '2큰술' }, { id: 'fish-sauce', amount: '2큰술 (없으면 빼도 돼요)' },
       { id: 'salt', amount: '1/2큰술' }, { id: 'pepper', amount: '적당히' }, { name: '물', amount: '1.5L' },
     ],
     steps: [

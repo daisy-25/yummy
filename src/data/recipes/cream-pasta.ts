@@ -13,11 +13,11 @@ export default [
     servings: '2인분',
     tools: ['깊은 프라이팬 (팬 하나로 끝나요)'],
     ingredients: [
-      { id: 'pasta', amount: '160g (페투치네, 스파게티면도 OK)' }, { name: '닭가슴살', amount: '1덩이 (168g)' },
-      { id: 'heavy-cream', amount: '150g' }, { name: '우유', amount: '150g' },
-      { id: 'onion', amount: '1/2개 (80g)' }, { name: '양송이버섯', amount: '4개 (80g)' }, { id: 'garlic-whole', amount: '4알 (25g)' },
-      { name: '무염버터', amount: '20g' }, { id: 'oil', amount: '2스푼' }, { id: 'olive-oil', amount: '1스푼' },
-      { name: '밀가루', amount: '1스푼 (10g)' }, { id: 'salt', amount: '1티스푼 + 닭 밑간 0.5티스푼' },
+      { id: 'pasta', amount: '160g (페투치네, 스파게티면도 OK)' }, { id: 'chicken-breast', amount: '1덩이 (168g)' },
+      { id: 'heavy-cream', amount: '150g' }, { id: 'milk', amount: '150g' },
+      { id: 'onion', amount: '1/2개 (80g)' }, { id: 'button-mushroom', amount: '4개 (80g)' }, { id: 'garlic-whole', amount: '4알 (25g)' },
+      { id: 'butter', amount: '20g' }, { id: 'oil', amount: '2스푼' }, { id: 'olive-oil', amount: '1스푼' },
+      { id: 'flour', amount: '1스푼 (10g)' }, { id: 'salt', amount: '1티스푼 + 닭 밑간 0.5티스푼' },
       { id: 'pepper', amount: '조금' }, { name: '크러쉬드 레드페퍼', amount: '1티스푼' },
     ],
     steps: [

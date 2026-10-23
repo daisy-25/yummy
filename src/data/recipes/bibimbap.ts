@@ -14,10 +14,10 @@ export default [
     tools: ['전자레인지 용기 (뚜껑 또는 랩)', '프라이팬'],
     ingredients: [
       { id: 'rice', amount: '1공기(200g)' }, { id: 'zucchini', amount: '약간(40g)' }, { id: 'bean-sprout', amount: '약 1/2컵(40g)' },
-      { id: 'radish', amount: '약간(30g)' }, { id: 'carrot', amount: '약간(14g)' }, { name: '표고버섯', amount: '1개(12g)' },
+      { id: 'radish', amount: '약간(30g)' }, { id: 'carrot', amount: '약간(14g)' }, { id: 'shiitake', amount: '1개(12g)' },
       { id: 'egg', amount: '1개' }, { id: 'oil', amount: '적당량' },
       { id: 'gochujang', amount: '1큰술' }, { id: 'soy-soup', amount: '1큰술', check: true }, { id: 'sesame-oil', amount: '1큰술' },
-      { name: '통깨', amount: '약간' }, { name: '김가루', amount: '약간' },
+      { id: 'sesame-seed', amount: '약간' }, { name: '김가루', amount: '약간' },
     ],
     steps: [
       { phase: '준비', text: '표고버섯 1개는 기둥을 떼고 0.2cm 두께로 얇게 채 썰어요' },

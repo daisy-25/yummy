@@ -16,9 +16,9 @@ export default [
       { id: 'pasta', amount: '200g' }, { id: 'tomato-sauce', amount: '300g' }, { id: 'bacon', amount: '80g' },
       { id: 'onion', amount: '1/3개' }, { id: 'garlic-whole', amount: '10알' },
       { name: '칵테일새우', amount: '7마리 (없으면 빼도 돼요)' },
-      { id: 'olive-oil', amount: '3~4큰술' }, { name: '페페론치노', amount: '3개' },
+      { id: 'olive-oil', amount: '3~4큰술' }, { id: 'pepperoncino', amount: '3개' },
       { id: 'salt', amount: '면 삶을 때 1큰술' }, { id: 'pepper', amount: '조금' },
-      { name: '파슬리 가루', amount: '조금' }, { name: '파마산 치즈가루', amount: '조금' },
+      { name: '파슬리 가루', amount: '조금' }, { id: 'parmesan', amount: '조금' },
     ],
     steps: [
       { phase: '준비', text: '면 삶을 물을 냄비에 먼저 올려두세요' },

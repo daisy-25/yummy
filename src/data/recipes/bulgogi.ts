@@ -13,11 +13,11 @@ export default [
     servings: '4인분 (소고기 500g, 2인 저녁 + 도시락 넉넉히)',
     tools: ['큰 볼', '프라이팬'],
     ingredients: [
-      { id: 'beef-bulgogi', amount: '500g' }, { id: 'onion', amount: '3/5개 (150g)' }, { name: '표고버섯', amount: '2개 (40g)' },
+      { id: 'beef-bulgogi', amount: '500g' }, { id: 'onion', amount: '3/5개 (150g)' }, { id: 'shiitake', amount: '2개 (40g)' },
       { id: 'green-onion', amount: '약 1대 (80g)' }, { name: '홍고추', amount: '1개 (없어도 돼요)' },
-      { id: 'sugar', amount: '2와 1/2큰술 (황설탕)' }, { name: '물엿', amount: '1큰술' }, { id: 'garlic-minced', amount: '1큰술' },
+      { id: 'sugar', amount: '2와 1/2큰술 (황설탕)' }, { id: 'mulyeot', amount: '1큰술' }, { id: 'garlic-minced', amount: '1큰술' },
       { id: 'soy', amount: '5큰술' }, { id: 'pepper', amount: '약간' }, { id: 'sesame-oil', amount: '3큰술' },
-      { name: '통깨', amount: '약간' },
+      { id: 'sesame-seed', amount: '약간' },
     ],
     steps: [
       { phase: '준비', text: '소고기 500g을 한입 크기로 잘라 볼에 넣고 잘 풀어요' },

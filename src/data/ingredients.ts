@@ -10,6 +10,7 @@ export const ingredients = {
   'pork-block': { name: '수육용 돼지고기', section: '정육', buyUnit: '600g' },
   'whole-chicken': { name: '닭볶음탕용 닭', section: '정육', buyUnit: '1마리' },
   'chicken-thigh': { name: '닭다리살', section: '정육', buyUnit: '500g' },
+  'chicken-breast': { name: '닭가슴살', section: '정육', buyUnit: '1팩' },
   'beef-bulgogi': { name: '불고기용 소고기', section: '정육', buyUnit: '300g' },
   'beef-soup': { name: '국거리 소고기', section: '정육', buyUnit: '300g' },
   'beef-ground': { name: '다진 소고기', section: '정육', buyUnit: '300g' },
@@ -32,6 +33,8 @@ export const ingredients = {
   spinach: { name: '시금치', section: '채소', buyUnit: '1단' },
   lettuce: { name: '상추', section: '채소', buyUnit: '1봉' },
   perilla: { name: '깻잎', section: '채소', buyUnit: '1묶음' },
+  shiitake: { name: '표고버섯', section: '채소', buyUnit: '1팩' },
+  'button-mushroom': { name: '양송이버섯', section: '채소', buyUnit: '1팩' },
 
   /* 두부·계란 */
   tofu: { name: '두부', section: '두부·계란', buyUnit: '1모' },
@@ -52,6 +55,11 @@ export const ingredients = {
   laver: { name: '조미김', section: '가공·기타', buyUnit: '1봉(소포장 묶음)' },
   tortilla: { name: '또띠아', section: '가공·기타', buyUnit: '1봉(10장)' },
   mozzarella: { name: '모차렐라 치즈', section: '가공·기타', buyUnit: '1봉' },
+  butter: { name: '버터', section: '가공·기타', buyUnit: '1개' },
+  milk: { name: '우유', section: '가공·기타', buyUnit: '1팩' },
+  'canned-mackerel': { name: '고등어 통조림', section: '가공·기타', buyUnit: '1캔(400g)' },
+  parmesan: { name: '파마산 치즈가루', section: '가공·기타', buyUnit: '1통' },
+  soju: { name: '소주', section: '가공·기타', buyUnit: '1병' },
 
   /* 양념·소스 (대부분 집에 늘 있음) */
   soy: { name: '진간장', section: '양념·소스', buyUnit: '1병', staple: true },
@@ -72,6 +80,17 @@ export const ingredients = {
   'olive-oil': { name: '올리브유', section: '양념·소스', buyUnit: '1병', staple: true },
   mayo: { name: '마요네즈', section: '양념·소스', buyUnit: '1통', staple: true },
   'tuna-sauce': { name: '참치액', section: '양념·소스', buyUnit: '1병' },
+  'sesame-seed': { name: '통깨', section: '양념·소스', buyUnit: '1봉', staple: true },
+  mulyeot: { name: '물엿', section: '양념·소스', buyUnit: '1병', staple: true },
+  flour: { name: '밀가루', section: '양념·소스', buyUnit: '1봉', staple: true },
+  cheongju: { name: '청주', section: '양념·소스', buyUnit: '1병' },
+  maesil: { name: '매실청', section: '양념·소스', buyUnit: '1병' },
+  'fish-sauce': { name: '멸치액젓', section: '양념·소스', buyUnit: '1병' },
+  saeujeot: { name: '새우젓', section: '양념·소스', buyUnit: '1통' },
+  pepperoncino: { name: '페페론치노', section: '양념·소스', buyUnit: '1봉' },
+  'dried-chili': { name: '베트남 건고추', section: '양념·소스', buyUnit: '1봉' },
+  doubanjiang: { name: '두반장', section: '양념·소스', buyUnit: '1병' },
+  'steak-sauce': { name: '스테이크 소스', section: '양념·소스', buyUnit: '1병' },
   starch: { name: '감자전분', section: '양념·소스', buyUnit: '1봉' },
 
   /* 곡류 */

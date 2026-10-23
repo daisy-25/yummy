@@ -16,7 +16,7 @@ export default [
       { id: 'pork-front', amount: '1컵 (130g)' }, { id: 'kimchi', amount: '3컵 (390g, 신김치)' }, { name: '물', amount: '3컵 (540ml)' },
       { id: 'cheongyang', amount: '2개' }, { id: 'green-onion', amount: '2/3대' },
       { id: 'garlic-minced', amount: '1큰술' }, { id: 'chili-flakes', amount: '굵은 것 1큰술 + 고운 것 1/2큰술' },
-      { id: 'soy-soup', amount: '1큰술' }, { name: '새우젓', amount: '1큰술' },
+      { id: 'soy-soup', amount: '1큰술' }, { id: 'saeujeot', amount: '1큰술' },
     ],
     steps: [
       { phase: '준비', text: '돼지고기 130g을 1.5cm 두께로 먹기 좋게 썰어요' },
