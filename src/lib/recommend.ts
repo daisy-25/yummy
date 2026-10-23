@@ -1,5 +1,5 @@
 // 추천 규칙 (SPEC 4장). AI가 아니라 규칙 + 점수 + 약간의 운으로 뽑아요.
-import { ingredientOf, menuIds, menuOf, recipeById, type IngredientId, type MenuId } from '../data/index.ts'
+import { ingredientOf, menuIds, menuOf, menuOfKey, type IngredientId, type MenuId } from '../data/index.ts'
 import type { DayPlan, Menu, UserData, WeekPlan } from '../types.ts'
 import { addDays, parseKey, toKey } from './date.ts'
 
@@ -50,10 +50,8 @@ function makeContext(data: UserData, weekStart: string): Context {
 
   const hearted = new Set<MenuId>()
   for (const key of Object.keys(data.hearts)) {
-    // 열쇠는 레시피 id, 영상이 없는 메뉴는 메뉴 id (data/index.ts의 recordKey)
-    const r = recipeById(key)
-    if (r) hearted.add(r.menuId)
-    else if ((menuIds as string[]).includes(key)) hearted.add(key as MenuId)
+    const id = menuOfKey(key)
+    if (id) hearted.add(id)
   }
 
   const lastCooked = new Map<MenuId, string>()

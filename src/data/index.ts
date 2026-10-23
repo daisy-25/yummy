@@ -34,6 +34,10 @@ export const recipeById = (id: string) => recipes.find(r => r.id === id)
 /** 하트 · 메모를 붙이는 열쇠: 대표 레시피 → 첫 영상 → 메뉴 id 순 */
 export const recordKey = (menuId: MenuId): string => menuOf(menuId).mainRecipe ?? recipesOf(menuId)[0]?.id ?? menuId
 
+/** 열쇠(레시피 id 또는 메뉴 id) → 메뉴. 예전에 저장한 열쇠도 찾아요 */
+export const menuOfKey = (key: string): MenuId | undefined =>
+  recipeById(key)?.menuId ?? ((menuIds as string[]).includes(key) ? (key as MenuId) : undefined)
+
 /** 타입 검사로 못 잡는 연결 문제를 찾아요. 문제 목록을 돌려줘요 (없으면 빈 배열) */
 export function checkData(): string[] {
   const problems: string[] = []

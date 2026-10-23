@@ -1,0 +1,24 @@
+/* 찜 탭 */
+.saved-head { padding-top: 30px; }
+.saved-head p { margin-top: 10px; font-size: 13px; color: var(--mute); }
+.saved .pad .btn { margin-top: 24px; flex: none; }
+.saved .grp { display: flex; justify-content: space-between; padding: 28px 20px 4px; font-size: 13px; font-weight: 700; color: var(--mute); }
+.saved .grp i { font-style: normal; font-weight: 400; }
+
+.s-row { width: calc(100% - 40px); display: block; margin: 0 20px; padding: 15px 0; border-bottom: 1px solid var(--line); text-align: left; }
+.s-row .s-top { display: flex; align-items: center; gap: 6px; }
+.s-row .nm { font-size: 17px; font-weight: 700; }
+.s-row .tg { display: block; margin-top: 3px; font-size: 12.5px; color: var(--mute); }
+.s-row .memo-line { display: block; margin-top: 10px; padding: 10px 12px; border-radius: 12px; background: var(--soft); font-size: 14px; line-height: 1.5; }
+.s-row .memo-line small { margin-left: 8px; font-size: 11.5px; color: var(--mute); }
+
+/* 기록 백업 */
+.backup { margin: 40px 12px 28px; padding: 20px 18px; border-radius: 20px; background: var(--soft); }
+.backup h2 { font-size: 16px; font-weight: 800; }
+.backup p { margin-top: 6px; font-size: 13px; line-height: 1.55; color: var(--mute); }
+.backup .sum { color: var(--ink); font-weight: 600; }
+.backup-acts { display: flex; gap: 8px; margin-top: 16px; }
+.backup-acts .btn.ghost { background: var(--paper); }
+.backup .msg { margin-top: 12px; color: var(--ink); font-weight: 600; }
+.backup .msg.err { color: #b3261e; }
+.restore-warn { margin-top: 14px; font-size: 14px; font-weight: 600; line-height: 1.5; }
